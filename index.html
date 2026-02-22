@@ -1,0 +1,1993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entrusted</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  /* Figma tokens — colors */
+  --bg:#fdfbf7;--white:#ffffff;
+  --bg-active:#f5f5f4;
+  --g900:#0d2b1a;--g800:#1c4d2e;--g700:#1e5c35;--g600:#2d7a4a;
+  --g100:#e8f2ec;--g50:#f0f7f2;
+  --text:#181d27;--ts:#414651;--tt:#535862;--tm:#a4a7ae;
+  --border:#e7e5e4;--bm:#d7d3d0;
+  --red:#dc2626;--redbg:#fee2e2;
+  --amber:#d97706;--amberbg:#fef3c7;
+  --success:#079455;
+  /* Figma tokens — spacing */
+  --sp-xxs:2px;--sp-xs:4px;--sp-sm:6px;--sp-md:8px;--sp-lg:12px;--sp-xl:16px;--sp-2xl:20px;--sp-3xl:24px;--sp-4xl:32px;
+  /* Figma tokens — radii */
+  --r-sm:6px;--r-md:8px;--r-lg:10px;--r-xl:12px;--r-2xl:16px;--r-full:9999px;
+  /* Figma tokens — typography */
+  --ff:'DM Sans',sans-serif;
+  --fs-xs:12px;--lh-xs:18px;
+  --fs-sm:14px;--lh-sm:20px;
+  --fs-md:16px;--lh-md:24px;
+  --fs-lg:18px;--lh-lg:28px;
+  --fs-xl:20px;--lh-xl:30px;
+  --fs-dxs:24px;--lh-dxs:32px;
+  --fs-dsm:30px;--lh-dsm:38px;
+  /* Shadows */
+  --sh:0 1px 2px rgba(10,13,18,.05);
+  --shm:0 4px 16px rgba(0,0,0,.1);
+  --shl:0 24px 80px rgba(0,0,0,.18),0 8px 24px rgba(0,0,0,.1);
+}
+html{font-size:var(--fs-sm);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{font-family:var(--ff);
+  background:var(--bg);color:var(--text);height:100vh;overflow:hidden;display:flex}
+
+/* ── SIDEBAR ────────────────────────────────────── */
+#sidebar{width:296px;flex-shrink:0;background:var(--bg);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;height:100vh}
+.sb-logo{display:flex;align-items:center;gap:10px;padding:var(--sp-3xl) var(--sp-2xl) 0;
+  font-size:20px;font-weight:700;letter-spacing:-.4px;color:var(--text);margin-bottom:var(--sp-xl)}
+.sb-logo img{height:32px;width:auto}
+.sb-icon{width:28px;height:28px;background:var(--g800);border-radius:6px;display:flex;
+  align-items:center;justify-content:center;color:#fff;flex-shrink:0;position:relative}
+.sb-icon svg{width:28px;height:28px}
+.sb-nav{padding:0 var(--sp-xl);flex:1}
+.nav-item{display:flex;align-items:center;gap:var(--sp-lg);padding:var(--sp-md) var(--sp-lg);border-radius:var(--r-sm);cursor:pointer;
+  font-size:var(--fs-md);line-height:var(--lh-md);color:var(--ts);font-weight:600;transition:all .12s;user-select:none;
+  margin:var(--sp-xxs) 0}
+.nav-item:hover{background:var(--bg-active);color:var(--text)}
+.nav-item.active{background:var(--bg-active);color:var(--text);font-weight:600}
+.nav-item.disabled{color:var(--tm);cursor:default;pointer-events:none;opacity:.65}
+.nav-item.disabled:hover{background:transparent;color:var(--tm)}
+.nav-item .ni{width:20px;height:20px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.nav-item .ni svg{width:20px;height:20px;stroke-width:1.67}
+.nav-badge{margin-left:auto;background:#fafafa;color:var(--ts);font-size:var(--fs-xs);font-weight:500;
+  line-height:var(--lh-xs);border:1px solid #e9eaeb;border-radius:var(--r-full);
+  display:flex;align-items:center;justify-content:center;padding:var(--sp-xxs) var(--sp-md)}
+.sb-footer{padding:0 var(--sp-xl) var(--sp-3xl)}
+.sb-footer-nav{display:flex;flex-direction:column}
+.sb-footer-row{display:flex;align-items:center;gap:var(--sp-md);padding:var(--sp-md) var(--sp-lg);border-radius:var(--r-sm);
+  cursor:pointer;font-size:var(--fs-md);line-height:var(--lh-md);color:var(--ts);font-weight:600;transition:all .12s;
+  margin:var(--sp-xxs) 0}
+.sb-footer-row:hover{background:var(--bg-active);color:var(--text)}
+.sb-footer-row .ni{width:20px;height:20px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.sb-footer-row .ni svg{width:20px;height:20px;stroke-width:1.67}
+.sb-user{display:flex;align-items:center;gap:var(--sp-md);padding:var(--sp-lg);border-radius:var(--r-md);
+  cursor:pointer;transition:all .12s;border:1px solid var(--border);background:var(--white);margin-top:var(--sp-xl);position:relative}
+.sb-user:hover{background:var(--bg-active)}
+.user-av{width:40px;height:40px;border-radius:var(--r-full);display:flex;align-items:center;
+  justify-content:center;flex-shrink:0}
+.user-av svg{width:40px;height:40px}
+.user-name{font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:600;color:var(--text)}
+.user-role{font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:400;color:var(--tt)}
+.user-chev{position:absolute;right:7px;top:7px;padding:var(--sp-sm);border-radius:var(--r-sm);color:var(--tm);
+  display:flex;align-items:center;justify-content:center}
+.user-chev svg{width:24px;height:24px}
+
+/* ── MAIN ───────────────────────────────────────── */
+#main{flex:1;display:flex;flex-direction:column;height:100vh;overflow:hidden;min-width:0}
+#topbar{height:72px;background:var(--bg);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 var(--sp-4xl);gap:var(--sp-xl);flex-shrink:0}
+.search-box{display:flex;align-items:center;gap:var(--sp-md);background:var(--white);border:1px solid var(--border);
+  border-radius:var(--r-md);padding:var(--sp-md) var(--sp-lg);width:400px;flex-shrink:0;color:var(--tm);
+  font-size:var(--fs-md);line-height:var(--lh-md);cursor:text;box-shadow:var(--sh);white-space:nowrap;overflow:hidden}
+.search-box svg{width:20px;height:20px;flex-shrink:0;stroke:var(--tm)}
+.search-txt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.tb-space{flex:1}
+.tb-icon{width:40px;height:40px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--tt);transition:background .12s}
+.tb-icon svg{width:24px;height:24px}
+.tb-icon:hover{background:var(--bg-active)}
+.help-link{display:flex;align-items:center;gap:var(--sp-md);font-size:var(--fs-md);line-height:var(--lh-md);
+  color:var(--tt);cursor:pointer;padding:var(--sp-md) var(--sp-lg);border-radius:var(--r-md);font-weight:600;
+  transition:background .12s}
+.help-link svg{width:20px;height:20px}
+.help-link:hover{background:var(--bg-active)}
+
+/* ── CONTENT ────────────────────────────────────── */
+#content{flex:1;overflow-y:auto;overflow-x:hidden;position:relative;min-height:0}
+.screen{display:none;height:100%;animation:fadeIn .22s ease}
+.screen.wiz-screen{overflow:hidden}
+#sc-dash{overflow-y:auto}
+.screen.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── DASHBOARD ──────────────────────────────────── */
+.dash-wrap{padding:var(--sp-4xl) var(--sp-4xl)}
+.dash-h1{font-size:var(--fs-dsm);line-height:var(--lh-dsm);font-weight:600;letter-spacing:-.3px;margin-bottom:4px}
+.dash-sub{font-size:var(--fs-md);line-height:var(--lh-md);color:var(--ts);margin-bottom:var(--sp-4xl);font-weight:400}
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-lg);margin-bottom:var(--sp-4xl)}
+.stat-c{background:var(--white);border:1px solid var(--border);border-radius:var(--r-xl);
+  box-shadow:var(--sh);display:flex;flex-direction:column;overflow:hidden}
+.stat-hdr{padding:var(--sp-md) var(--sp-2xl);font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:600;color:var(--text)}
+.stat-body{padding:var(--sp-2xl);border-top:1px solid var(--border);flex:1;display:flex;flex-direction:column;gap:var(--sp-lg)}
+.stat-num{font-size:var(--fs-dsm);line-height:var(--lh-dsm);font-weight:600;letter-spacing:-.5px}
+.stat-note{font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:500;display:flex;align-items:center;gap:var(--sp-xs)}
+.stat-note.warn{color:var(--red)}.stat-note.amber{color:var(--amber)}.stat-note.muted{color:var(--ts)}
+.stat-note svg{width:16px;height:16px;flex-shrink:0}
+.stat-foot{display:flex;align-items:center;padding:var(--sp-lg) var(--sp-2xl);border-top:1px solid var(--border)}
+.stat-foot-lnk{font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:600;color:var(--g800);cursor:pointer;
+  text-decoration:none;display:inline-flex;align-items:center;gap:var(--sp-xs);transition:color .12s}
+.stat-foot-lnk svg{width:20px;height:20px;flex-shrink:0}
+.stat-foot-lnk:hover{color:var(--g600);text-decoration:underline}
+.btn-sm{font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:600;color:var(--ts);cursor:pointer;
+  text-decoration:none;display:inline-flex;align-items:center;gap:var(--sp-xs);
+  border:1px solid var(--border);border-radius:var(--r-md);padding:var(--sp-md) var(--sp-lg);
+  box-shadow:0 0 0 1px rgba(10,13,18,.05);
+  transition:all .12s;background:var(--white)}
+.btn-sm:hover{background:var(--bg-active);border-color:var(--ts)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-3xl);margin-bottom:var(--sp-4xl)}
+.two-col>div{display:flex;flex-direction:column}
+.section-ttl{font-size:var(--fs-md);line-height:var(--lh-md);font-weight:600;margin-bottom:var(--sp-2xl);color:var(--text)}
+.resume-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-xl);
+  box-shadow:var(--sh);overflow:hidden;flex:1;display:flex;flex-direction:column}
+.resume-top{padding:var(--sp-2xl);flex:1}
+.resume-name{font-size:var(--fs-md);line-height:var(--lh-md);font-weight:600;margin-bottom:4px}
+.resume-type{font-size:var(--fs-sm);line-height:var(--lh-sm);color:var(--ts);margin-bottom:var(--sp-lg);font-weight:400}
+.resume-badge-row{display:flex;align-items:center;gap:var(--sp-sm);font-size:var(--fs-sm);line-height:var(--lh-sm);color:var(--amber);font-weight:500}
+.resume-badge-row svg{width:16px;height:16px;flex-shrink:0}
+.resume-foot{padding:var(--sp-lg) var(--sp-2xl);border-top:1px solid var(--border)}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:var(--sp-xxs) var(--sp-md);
+  border-radius:var(--r-full);font-size:var(--fs-xs);line-height:var(--lh-xs);font-weight:500;
+  border:1px solid var(--border);background:var(--white);color:var(--ts)}
+.badge .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.badge.warn .dot{background:var(--amber)}
+.badge.danger .dot{background:var(--red)}
+.badge.ok .dot{background:var(--success)}
+.badge.warn{background:var(--white);color:var(--ts);border-color:var(--border)}
+.badge.danger{background:var(--white);color:var(--ts);border-color:var(--border)}
+.badge.ok{background:var(--white);color:var(--ts);border-color:var(--border)}
+.resume-lnk{display:inline-flex;align-items:center;gap:var(--sp-xs);font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:600;
+  color:var(--g800);cursor:pointer;text-decoration:none}
+.resume-lnk:hover{text-decoration:underline}
+.resume-lnk svg{flex-shrink:0}
+.qa-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-2xl);flex:1}
+.qa-btn{background:var(--white);border:1px solid var(--border);border-radius:var(--r-md);
+  padding:var(--sp-lg) 18px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:var(--sp-sm);
+  font-size:var(--fs-md);line-height:var(--lh-md);font-weight:600;
+  transition:all .15s;color:var(--ts);font-family:var(--ff);
+  box-shadow:0 1px 2px rgba(10,13,18,.03)}
+.qa-btn svg{width:24px;height:24px;flex-shrink:0;color:var(--tm)}
+.qa-btn:hover{background:var(--bg-active);border-color:var(--ts)}
+.qa-btn:active{background:var(--bg-active);transform:scale(.99)}
+.urgent-outer-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--sp-2xl)}
+.urgent-outer-hdr .section-ttl{margin:0}
+.urgent-block{background:var(--white);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--sh)}
+.t-cols{display:grid;grid-template-columns:37% 17% 12% 13% 21%;padding:0 var(--sp-3xl);
+  height:44px;align-items:center;
+  background:var(--white);border-bottom:1px solid var(--border);
+  font-size:var(--fs-xs);line-height:var(--lh-xs);font-weight:600;color:#717680}
+.t-row{display:grid;grid-template-columns:37% 17% 12% 13% 21%;padding:0 var(--sp-3xl);
+  height:72px;align-items:center;
+  border-bottom:1px solid var(--border);font-size:var(--fs-sm);line-height:var(--lh-sm);transition:background .1s}
+.t-row:last-child{border-bottom:none}
+.tn{font-weight:500;font-size:var(--fs-sm);line-height:var(--lh-sm);color:var(--text)}
+.tid{font-size:var(--fs-sm);line-height:var(--lh-sm);color:var(--tt);margin-top:2px;font-weight:400}
+.task-name{font-weight:400;font-size:var(--fs-sm);line-height:var(--lh-sm)}
+.task-code{font-size:var(--fs-sm);line-height:var(--lh-sm);color:var(--tt);margin-top:2px;font-weight:400}
+.t-acts{display:flex;gap:var(--sp-lg);justify-content:flex-end}
+.t-acts a{font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:600;color:var(--tt);cursor:pointer}
+.t-acts a:hover{color:var(--text);text-decoration:underline}
+.t-acts a.g{color:#0a4c08}
+
+/* ── WIZARD SHELL ───────────────────────────────── */
+.wiz{display:flex;flex-direction:column;height:100%;overflow:hidden}
+.wiz-top{display:flex;align-items:center;padding:var(--sp-2xl) var(--sp-4xl) 0;flex-shrink:0;position:relative}
+.step-ind{display:flex;align-items:center;gap:var(--sp-lg);font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:600;color:var(--ts);
+  margin:0 auto}
+.dots{display:flex;align-items:center;gap:6px}
+.dot{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  transition:all .3s cubic-bezier(.34,1.2,.64,1);font-size:11px;font-weight:600}
+.dot.done{background:var(--g800);color:#fff;cursor:pointer}
+.dot.done::after{display:none}
+.dot.done svg{width:14px;height:14px}
+.dot.cur{background:var(--g800);border:3px solid #a3b8a3;width:28px;height:28px;box-sizing:border-box}
+.dot.cur::after{content:'';width:8px;height:8px;background:#fff;border-radius:50%}
+.dot.up{background:#fff;border:1.5px solid #e9eaeb;width:24px;height:24px}
+.dot.up::after{content:'';width:8px;height:8px;background:#d0d5dd;border-radius:50%}
+.save-exit{font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:600;color:var(--ts);cursor:pointer;
+  background:none;border:none;font-family:var(--ff);transition:color .12s;position:absolute;right:var(--sp-4xl);top:50%;transform:translateY(-50%);margin-top:10px}
+.save-exit:hover{color:var(--text)}
+
+.wiz-step{display:flex;flex-direction:column;height:100%;overflow:hidden}
+.wiz-body{flex:1;display:flex;flex-direction:column;align-items:center;padding:var(--sp-4xl) var(--sp-4xl) var(--sp-xl);overflow-y:auto}
+.wiz-ttl{text-align:center;margin-bottom:var(--sp-3xl)}
+.wiz-ttl h2{font-size:var(--fs-dxs);line-height:var(--lh-dxs);font-weight:600;letter-spacing:-.3px;margin-bottom:var(--sp-xs)}
+.wiz-ttl p{font-size:var(--fs-md);line-height:var(--lh-md);color:var(--ts);font-weight:400}
+.wiz-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-2xl);
+  padding:var(--sp-3xl);width:100%;max-width:680px;box-shadow:var(--sh)}
+.wiz-card.wide{max-width:1080px}
+
+.wiz-foot{padding:var(--sp-xl) var(--sp-4xl) var(--sp-3xl);display:flex;align-items:center;justify-content:space-between;
+  width:100%;margin:auto auto 0;flex-shrink:0}
+.wiz-foot-r{display:flex;gap:var(--sp-lg);align-items:center}
+.btn-prev{display:inline-flex;align-items:center;gap:var(--sp-xs);padding:var(--sp-md) 0;
+  font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:600;color:var(--ts);cursor:pointer;
+  background:none;border:none;font-family:var(--ff);transition:color .12s}
+.btn-prev:hover{color:var(--text)}
+.btn-skip{padding:var(--sp-md) var(--sp-lg);font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:600;color:var(--ts);cursor:pointer;
+  background:none;border:none;font-family:var(--ff);transition:all .12s;border-radius:var(--r-md)}
+.btn-skip:hover{color:var(--text);background:rgba(0,0,0,.04)}
+.btn-next{display:inline-flex;align-items:center;gap:var(--sp-md);padding:var(--sp-lg) var(--sp-2xl);
+  background:var(--g800);color:#fff;border:none;border-radius:var(--r-md);font-size:var(--fs-sm);line-height:var(--lh-sm);
+  font-weight:600;cursor:pointer;font-family:var(--ff);transition:all .12s;box-shadow:var(--sh)}
+.btn-next:hover{background:#163d24}
+.btn-next:active{transform:scale(.98)}
+.btn-confirm{display:inline-flex;align-items:center;gap:var(--sp-md);padding:var(--sp-lg) var(--sp-2xl);
+  background:var(--g800);color:#fff;border:none;border-radius:var(--r-md);font-size:var(--fs-sm);line-height:var(--lh-sm);
+  font-weight:600;cursor:pointer;font-family:var(--ff);transition:all .12s;box-shadow:var(--sh)}
+.btn-confirm:hover{background:#163d24}
+.btn-confirm:active{transform:scale(.98)}
+
+/* ── FORM ELEMENTS ──────────────────────────────── */
+.fg{margin-bottom:18px}
+.fl{display:block;font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:500;color:var(--text);margin-bottom:var(--sp-sm)}
+.fl .req{color:var(--red);margin-left:1px}
+.fi{width:100%;height:44px;border:1px solid var(--border);border-radius:var(--r-md);padding:0 var(--sp-lg);
+  font-size:var(--fs-md);line-height:var(--lh-md);font-family:var(--ff);color:var(--text);background:var(--white);
+  transition:border-color .15s,box-shadow .15s;outline:none;box-shadow:var(--sh)}
+.fi:focus{border-color:var(--g800);box-shadow:0 0 0 3px rgba(28,77,46,.12)}
+.fi::placeholder{color:var(--tm)}
+.fi:hover:not(:focus){border-color:var(--bm)}
+.fs{width:100%;height:44px;border:1px solid var(--border);border-radius:var(--r-md);padding:0 var(--sp-4xl) 0 var(--sp-lg);
+  font-size:var(--fs-md);line-height:var(--lh-md);font-family:var(--ff);color:var(--text);background:var(--white);
+  appearance:none;-webkit-appearance:none;outline:none;cursor:pointer;box-shadow:var(--sh);position:relative;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23535862' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;
+  transition:border-color .15s,box-shadow .15s}
+.fs:focus{border-color:var(--g800);box-shadow:0 0 0 3px rgba(28,77,46,.12)}
+.fs:hover:not(:focus){border-color:var(--bm)}
+.fhint{font-size:var(--fs-sm);line-height:var(--lh-sm);color:var(--tt);margin-top:var(--sp-sm);font-weight:400}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-xl)}
+.pre-wrap{position:relative}
+.pre-sym{position:absolute;left:var(--sp-lg);top:50%;transform:translateY(-50%);
+  font-size:var(--fs-md);color:var(--tt);pointer-events:none;z-index:1}
+.pre-wrap .fi{padding-left:24px}
+.suf-wrap{position:relative}
+.suf-sym{position:absolute;right:var(--sp-lg);top:50%;transform:translateY(-50%);
+  font-size:var(--fs-sm);color:var(--tm);pointer-events:none}
+.suf-wrap .fi{padding-right:40px}
+.rate-row{display:flex;align-items:center;border:1px solid var(--border);border-radius:var(--r-md);
+  background:var(--white);box-shadow:var(--sh);overflow:hidden;transition:border-color .15s,box-shadow .15s}
+.rate-row:focus-within{border-color:var(--g800);box-shadow:0 0 0 3px rgba(28,77,46,.12)}
+.rate-pre{padding:0 0 0 var(--sp-lg);color:var(--tt);font-size:var(--fs-md);flex-shrink:0}
+.rate-input{border:none!important;box-shadow:none!important;flex:1;min-width:0}
+.rate-input:focus{box-shadow:none!important}
+.rate-suf{padding:0 var(--sp-lg) 0 0;color:var(--tm);font-size:var(--fs-sm);flex-shrink:0;font-weight:400}
+.tip-box{background:#F5F5F5;border:none;border-left:4px solid #728972;border-radius:var(--r-sm);
+  padding:var(--sp-xl) var(--sp-2xl);font-size:var(--fs-sm);line-height:var(--lh-sm);color:var(--ts);margin-bottom:0;margin-top:var(--sp-xl);
+  display:flex;gap:var(--sp-lg);font-weight:400}
+.tip-box strong{color:var(--text);font-weight:600}
+.tip-box a{color:var(--g800);font-weight:600;text-decoration:underline}
+.tip-box a:hover{opacity:.8}
+
+/* ── RADIO OPTIONS ──────────────────────────────── */
+.radio-opt{border:1px solid var(--border);border-radius:var(--r-md);padding:var(--sp-lg) var(--sp-xl);
+  display:flex;align-items:center;gap:var(--sp-lg);cursor:pointer;
+  transition:all .15s;margin-bottom:var(--sp-md);background:var(--white);user-select:none;box-shadow:var(--sh)}
+.radio-opt:hover{border-color:var(--bm);background:var(--white)}
+.radio-opt.sel{border-color:var(--g800);background:var(--g50)}
+.rdot{width:18px;height:18px;border:2px solid var(--bm);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.radio-opt.sel .rdot{border-color:var(--g800);background:var(--g800)}
+.radio-opt.sel .rdot::after{content:'';width:6px;height:6px;background:#fff;border-radius:50%}
+.radio-lbl{font-size:var(--fs-md);line-height:var(--lh-md);font-weight:500}
+
+/* ── BENEFICIARIES ──────────────────────────────── */
+.bsec{margin-bottom:var(--sp-xs)}
+.bsec+.bsec{margin-top:var(--sp-2xl);padding-top:var(--sp-2xl);border-top:1px solid var(--border)}
+.bsec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--sp-lg)}
+.bsec-ttl{font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:600}
+.btn-add-sm{display:inline-flex;align-items:center;gap:var(--sp-xs);font-size:var(--fs-sm);font-weight:600;
+  color:var(--g800);background:none;border:none;cursor:pointer;font-family:var(--ff);
+  padding:var(--sp-xs) var(--sp-md);border-radius:var(--r-sm);transition:background .12s}
+.btn-add-sm:hover{background:var(--g50)}
+.bene-empty{border:1.5px dashed var(--bm);border-radius:var(--r-md);padding:var(--sp-2xl);text-align:center;
+  cursor:pointer;transition:all .15s;color:var(--tm)}
+.bene-empty:hover{border-color:var(--g800);color:var(--g800);background:var(--g50)}
+.bene-empty .plus-sq{width:28px;height:28px;border:1.5px solid currentColor;border-radius:var(--r-sm);
+  display:flex;align-items:center;justify-content:center;margin:0 auto var(--sp-md);font-size:15px}
+.bene-empty-txt{font-size:var(--fs-sm);font-weight:500}
+.bene-tbl{width:100%;border-collapse:collapse;border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden}
+.bene-tbl thead th{font-size:var(--fs-xs);line-height:var(--lh-xs);font-weight:600;color:#717680;
+  padding:var(--sp-md) var(--sp-lg);text-align:left;border-bottom:1px solid var(--border)}
+.bene-tbl tbody tr{border-bottom:1px solid var(--border)}
+.bene-tbl tbody tr:last-child{border-bottom:none}
+.bene-tbl tbody td{padding:var(--sp-xl) var(--sp-lg);font-size:var(--fs-sm);line-height:var(--lh-sm)}
+.act-btn{background:none;border:none;cursor:pointer;font-size:var(--fs-sm);font-weight:600;
+  color:var(--ts);font-family:var(--ff);padding:var(--sp-xxs) var(--sp-sm);border-radius:var(--r-sm);transition:all .1s}
+.act-btn:hover{text-decoration:underline}
+.act-btn.g{color:var(--g800)}
+.act-btn.g:hover{color:var(--g800)}
+
+/* ── ASSETS ─────────────────────────────────────── */
+.qa-grid-assets{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--sp-lg);margin:var(--sp-xl) 0}
+.asset-type-btn{background:var(--white);border:1px solid var(--border);border-radius:var(--r-md);
+  padding:var(--sp-lg) var(--sp-md);font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:500;cursor:pointer;
+  font-family:var(--ff);text-align:center;transition:all .15s;color:var(--text);box-shadow:var(--sh)}
+.asset-type-btn:hover{border-color:var(--bm);background:var(--bg-active)}
+.asset-type-btn:active{background:var(--bg-active)}
+.asset-list{margin-top:var(--sp-2xl);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden}
+.asset-list-hdr{display:flex;align-items:center;justify-content:space-between;padding:var(--sp-xl) var(--sp-2xl)}
+.asset-list-hdr-left{font-size:var(--fs-sm);font-weight:600}
+.asset-list-hdr-right{text-align:right}
+.asset-list-hdr-right .label{font-size:var(--fs-xs);font-weight:600;color:var(--ts)}
+.asset-list-hdr-right .value{font-size:var(--fs-xl);line-height:var(--lh-xl);font-weight:600}
+.asset-tbl{width:100%;border-collapse:collapse}
+.asset-tbl thead th{font-size:var(--fs-xs);line-height:var(--lh-xs);font-weight:600;color:#717680;
+  padding:var(--sp-lg) var(--sp-xl);text-align:left;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--white)}
+.asset-tbl tbody tr{border-bottom:1px solid var(--border)}
+.asset-tbl tbody tr:last-child{border-bottom:none}
+.asset-tbl tbody td{padding:var(--sp-xl);font-size:var(--fs-sm);line-height:var(--lh-sm)}
+.asset-tbl .act-btn{font-size:var(--fs-sm);font-weight:600;color:var(--ts)}
+.asset-tbl .act-btn.g{color:var(--g800)}
+.asset-tbl .act-btn:hover{text-decoration:underline}
+.asset-add-row{padding:var(--sp-xl);text-align:center;border-top:1px solid var(--border)}
+.asset-add-link{display:inline-flex;align-items:center;gap:var(--sp-xs);font-size:var(--fs-sm);font-weight:600;
+  color:var(--ts);cursor:pointer;background:none;border:none;font-family:var(--ff)}
+.asset-add-link:hover{color:var(--text)}
+.asset-add-link:disabled{opacity:.4;cursor:default;pointer-events:none}
+/* toggle switch */
+.ftoggle{display:flex;align-items:center;gap:var(--sp-md);cursor:pointer;font-size:var(--fs-sm);color:var(--ts);user-select:none;padding-top:28px}
+.ftoggle-track{width:36px;height:20px;border-radius:9999px;background:#d0d5dd;position:relative;transition:background .2s;flex-shrink:0}
+.ftoggle-thumb{width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transition:transform .2s;box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.ftoggle.on .ftoggle-track{background:var(--g800)}
+.ftoggle.on .ftoggle-thumb{transform:translateX(16px)}
+
+/* ── STEP 5 - BANK ──────────────────────────────── */
+.why-card{background:#fafaf9;border:1px solid var(--border);border-radius:var(--r-xl);padding:var(--sp-2xl);margin-bottom:var(--sp-xl)}
+.why-hdr{display:flex;align-items:flex-start;gap:var(--sp-lg);margin-bottom:var(--sp-xl)}
+.why-hdr svg{flex-shrink:0;margin-top:2px}
+.why-hdr-text{display:flex;flex-direction:column;gap:2px}
+.why-hdr-text strong{font-size:var(--fs-md);line-height:var(--lh-md);font-weight:600;color:var(--text)}
+.why-hdr-text span{font-size:var(--fs-sm);line-height:var(--lh-sm);color:var(--tt);font-weight:400}
+.acct-types{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-lg)}
+.acct-col{padding:var(--sp-xl);border-radius:var(--r-md);background:var(--white);border:1px solid var(--border)}
+.acct-col-lbl{display:flex;align-items:flex-start;gap:var(--sp-md);margin-bottom:var(--sp-md)}
+.acct-col-lbl svg{flex-shrink:0;margin-top:2px}
+.acct-col-lbl-text{display:flex;flex-direction:column}
+.acct-col-lbl-text strong{font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:600;color:var(--text)}
+.acct-col-lbl-text span{font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:400;color:var(--tt)}
+.acct-feat{font-size:var(--fs-sm);line-height:var(--lh-sm);color:var(--ts);display:flex;align-items:flex-start;gap:var(--sp-md);margin-bottom:var(--sp-sm);font-weight:400}
+.acct-feat::before{content:'✓';color:var(--g800);font-weight:700;flex-shrink:0}
+.acct-feat:last-child{margin-bottom:0}
+.sec-note{display:flex;align-items:center;gap:var(--sp-md);font-size:var(--fs-sm);line-height:var(--lh-sm);color:var(--tt);
+  background:var(--white);border:1px solid var(--border);padding:var(--sp-lg) var(--sp-xl);
+  border-radius:var(--r-md);margin-top:var(--sp-xl);font-weight:400}
+.plaid-zone{border:1px solid var(--border);border-radius:var(--r-xl);padding:var(--sp-3xl);text-align:center;
+  cursor:pointer;transition:all .15s;background:var(--white)}
+.plaid-zone:hover{border-color:var(--bm);background:var(--bg-active)}
+.plaid-zone-icon{width:40px;height:40px;border:1px solid var(--border);border-radius:var(--r-md);
+  display:flex;align-items:center;justify-content:center;margin:0 auto var(--sp-lg);
+  font-size:20px;background:var(--white);transition:border-color .15s}
+.plaid-zone:hover .plaid-zone-icon{border-color:var(--g800)}
+.plaid-zone-txt{font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:600;color:var(--g800)}
+.conn-card{border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;background:var(--white);box-shadow:var(--sh)}
+.conn-hdr{display:flex;justify-content:space-between;align-items:flex-start;
+  padding:14px 16px;border-bottom:1px solid var(--border)}
+.conn-ttl{font-size:13.5px;font-weight:700}
+.conn-total-lbl{font-size:11.5px;color:var(--tm);text-align:right}
+.conn-total-val{font-size:19px;font-weight:700;letter-spacing:-.3px}
+.conn-thead{display:grid;grid-template-columns:2fr 1.2fr 1fr 1fr 1.4fr;padding:var(--sp-lg) 16px;
+  background:var(--white);font-size:var(--fs-xs);line-height:var(--lh-xs);font-weight:600;text-transform:uppercase;
+  letter-spacing:.4px;color:#717680;border-bottom:1px solid var(--border)}
+.conn-row{display:grid;grid-template-columns:2fr 1.2fr 1fr 1fr 1.4fr;padding:12px 16px;
+  border-bottom:1px solid var(--border);font-size:13px;align-items:center}
+.conn-row:last-child{border-bottom:none}
+.conn-acts{display:flex;gap:10px}
+.conn-acts a{font-size:12px;font-weight:600;color:var(--ts);cursor:pointer;text-decoration:none}
+.conn-acts a:hover{color:var(--text);text-decoration:underline}
+.conn-acts a.g{color:var(--g800)}
+.conn-add-btn{display:flex;align-items:center;justify-content:center;gap:7px;padding:12px;
+  font-size:13px;font-weight:600;color:var(--g800);background:none;border:none;
+  cursor:pointer;font-family:var(--ff);width:100%;border-top:1px solid var(--border);transition:background .12s}
+.conn-add-btn:hover{background:var(--g50)}
+
+/* ── STEP 6 - REVIEW ────────────────────────────── */
+.rev-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-xl)}
+.rev-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-xl);padding:var(--sp-2xl)}
+.rev-card-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--sp-lg)}
+.rev-card-ttl{font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:600}
+.edit-ic{width:32px;height:32px;display:flex;align-items:center;justify-content:center;
+  border-radius:var(--r-sm);cursor:pointer;color:var(--tm);transition:all .12s;font-size:var(--fs-sm);
+  border:1px solid transparent}
+.edit-ic:hover{background:var(--bg-active);border-color:var(--border);color:var(--text)}
+.rev-row{display:grid;grid-template-columns:110px 1fr;gap:var(--sp-xs);padding:var(--sp-md) 0;
+  border-bottom:1px solid var(--border);font-size:var(--fs-sm);line-height:var(--lh-sm)}
+.rev-row:last-child{border-bottom:none}
+.rev-lbl{color:var(--tt);font-weight:500}
+.rev-val{color:var(--text);font-weight:400}
+.rev-full{grid-template-columns:1fr}
+
+/* ── SUCCESS ─────────────────────────────────────── */
+.suc-wrap{display:flex;flex-direction:column;align-items:center;min-height:100%;padding:var(--sp-3xl) var(--sp-4xl) 40px}
+.suc-top-bar{display:flex;align-items:center;gap:var(--sp-lg);font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:600;
+  color:var(--ts);margin-bottom:var(--sp-3xl)}
+.suc-ttl{text-align:center;margin-bottom:var(--sp-4xl)}
+.suc-ttl h2{font-size:var(--fs-dxs);line-height:var(--lh-dxs);font-weight:600;letter-spacing:-.4px;margin-bottom:var(--sp-xs)}
+.suc-ttl p{font-size:var(--fs-md);line-height:var(--lh-md);color:var(--ts);font-weight:400}
+.suc-cards{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-xl);width:100%;max-width:780px;margin-bottom:var(--sp-4xl)}
+.suc-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-2xl);
+  cursor:pointer;transition:all .15s;display:flex;flex-direction:column;box-shadow:var(--sh);overflow:hidden}
+.suc-card:hover{border-color:var(--bm);box-shadow:0 1px 3px rgba(10,13,18,.06)}
+.suc-card:active{box-shadow:var(--sh)}
+.suc-card-ttl{font-size:var(--fs-md);line-height:var(--lh-md);font-weight:600;margin-bottom:var(--sp-sm);padding:var(--sp-2xl) var(--sp-2xl) 0}
+.suc-card-body{font-size:var(--fs-sm);line-height:var(--lh-sm);color:var(--ts);flex:1;padding:0 var(--sp-2xl);margin-bottom:0;font-weight:400}
+.suc-card-lnk{font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:600;color:var(--g800);display:flex;align-items:center;gap:var(--sp-xs);
+  border-top:1px solid var(--border);padding:var(--sp-lg) var(--sp-2xl);margin-top:var(--sp-2xl)}
+.btn-return{display:inline-flex;align-items:center;gap:var(--sp-md);padding:var(--sp-lg) var(--sp-3xl);
+  background:var(--g800);color:#fff;border:none;border-radius:var(--r-md);font-size:var(--fs-md);line-height:var(--lh-md);
+  font-weight:600;cursor:pointer;font-family:var(--ff);transition:all .12s;box-shadow:var(--sh)}
+.btn-return:hover{background:#163d24}
+.btn-return:active{transform:scale(.98)}
+
+/* ── DASH DISABLED ───────────────────────────────── */
+.dash-disabled{pointer-events:none!important;cursor:default!important}
+
+/* ── ONBOARDING TOOLTIP ─────────────────────────── */
+.onboard-tooltip{position:absolute;z-index:900;background:var(--white);border:1px solid var(--border);
+  border-radius:var(--r-xl);padding:var(--sp-xl) var(--sp-2xl);box-shadow:0 12px 40px rgba(10,13,18,.12),0 2px 8px rgba(10,13,18,.06);
+  max-width:280px;animation:onboardFadeIn .5s ease .3s both}
+.onboard-tooltip::before{content:'';position:absolute;bottom:100%;left:50%;transform:translateX(-50%);
+  border:8px solid transparent;border-bottom-color:var(--white)}
+.onboard-tooltip::after{content:'';position:absolute;bottom:calc(100% + 1px);left:50%;transform:translateX(-50%);
+  border:8px solid transparent;border-bottom-color:var(--border)}
+.onboard-dot{width:8px;height:8px;background:var(--g800);border-radius:50%;display:inline-block;
+  animation:onboardPulse 2s ease-in-out infinite;margin-right:var(--sp-sm);vertical-align:middle}
+.onboard-ttl{font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:600;color:var(--text);margin-bottom:4px}
+.onboard-body{font-size:var(--fs-xs);line-height:var(--lh-xs);color:var(--ts);font-weight:400}
+.onboard-dismiss{display:inline-flex;align-items:center;gap:4px;font-size:var(--fs-xs);font-weight:600;color:var(--g800);
+  cursor:pointer;background:none;border:none;font-family:var(--ff);margin-top:var(--sp-md);padding:0;transition:opacity .12s}
+.onboard-dismiss:hover{opacity:.7}
+@keyframes onboardFadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes onboardPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+
+/* ── MODALS ──────────────────────────────────────── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;
+  align-items:center;justify-content:center;z-index:100;
+  opacity:0;pointer-events:none;transition:opacity .22s ease;padding:var(--sp-2xl)}
+.overlay.open{opacity:1;pointer-events:all}
+.mbox{background:var(--white);border-radius:var(--r-2xl);width:100%;max-width:660px;
+  max-height:88vh;overflow-y:auto;box-shadow:var(--shl);
+  transform:scale(.95) translateY(8px);transition:transform .28s cubic-bezier(.34,1.2,.64,1)}
+.overlay.open .mbox{transform:scale(1) translateY(0)}
+.mhdr{display:flex;align-items:center;justify-content:space-between;
+  padding:var(--sp-2xl) var(--sp-3xl) var(--sp-xl);border-bottom:1px solid var(--border);
+  position:sticky;top:0;background:var(--white);border-radius:var(--r-2xl) var(--r-2xl) 0 0;z-index:1}
+.mttl{font-size:var(--fs-lg);line-height:var(--lh-lg);font-weight:600;letter-spacing:-.2px}
+.mclose{width:36px;height:36px;display:flex;align-items:center;justify-content:center;
+  border-radius:var(--r-md);cursor:pointer;color:var(--tm);font-size:18px;
+  background:none;border:none;transition:all .12s;font-family:var(--ff)}
+.mclose:hover{background:var(--bg-active);color:var(--text)}
+.mbody{padding:var(--sp-2xl) var(--sp-3xl)}
+.msec-ttl{font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:600;color:var(--text);margin:var(--sp-lg) 0 var(--sp-md)}
+.msec-ttl:first-child{margin-top:0}
+.mfoot{display:flex;gap:var(--sp-lg);padding:var(--sp-xl) var(--sp-3xl) var(--sp-2xl);border-top:1px solid var(--border)}
+.btn-cancel{flex:1;padding:var(--sp-lg);background:var(--white);border:1px solid var(--border);
+  border-radius:var(--r-md);font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:600;cursor:pointer;font-family:var(--ff);
+  color:var(--text);transition:background .12s;box-shadow:var(--sh)}
+.btn-cancel:hover{background:var(--bg-active)}
+.btn-save{flex:1;padding:var(--sp-lg);background:var(--g800);color:#fff;border:none;
+  border-radius:var(--r-md);font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:600;cursor:pointer;
+  font-family:var(--ff);transition:background .12s;box-shadow:var(--sh)}
+.btn-save:hover{background:#163d24}
+
+/* ── PLAID MODAL ─────────────────────────────────── */
+.plaid-mbox{max-width:400px}
+.plaid-mc{text-align:center;padding:34px 36px}
+.plaid-logo-row{display:flex;align-items:center;justify-content:center;gap:6px;
+  margin-bottom:26px;font-size:19px;font-weight:800;color:var(--text);letter-spacing:-.4px}
+.p-bank-circle{width:54px;height:54px;background:var(--g100);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:22px}
+.p-bank-name{font-size:17px;font-weight:700;margin-bottom:3px}
+.p-status{font-size:13.5px;color:var(--ts);margin-bottom:18px;min-height:20px}
+.p-prog{height:4px;background:var(--border);border-radius:2px;margin-bottom:20px;overflow:hidden}
+.p-bar{height:100%;background:var(--g800);border-radius:2px;width:0%;transition:width .7s ease}
+.p-spin{width:34px;height:34px;border:3px solid var(--border);border-top-color:var(--g800);
+  border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 18px}
+.p-check{width:54px;height:54px;background:var(--g800);border-radius:50%;
+  display:none;align-items:center;justify-content:center;margin:0 auto 14px}
+.p-check.show{display:flex;animation:popIn .4s cubic-bezier(.34,1.56,.64,1) forwards}
+.p-detail{background:var(--bg);border:1px solid var(--border);border-radius:9px;
+  padding:11px 14px;text-align:left;margin-bottom:16px;font-size:13px;display:none;line-height:1.5}
+.p-detail.show{display:block}
+.p-continue{width:100%;padding:12px;background:var(--g800);color:#fff;border:none;
+  border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--ff);
+  transition:background .12s;display:none}
+.p-continue.show{display:block}
+.p-continue:hover{background:#163d24}
+.p-sec{font-size:11.5px;color:var(--tm);margin-top:12px;display:flex;
+  align-items:center;justify-content:center;gap:4px}
+
+/* ── SAVE EXIT DIALOG ────────────────────────────── */
+.se-box{max-width:380px}
+.se-body{padding:20px 22px;font-size:13.5px;color:var(--ts);line-height:1.6}
+.se-body strong{color:var(--text)}
+.se-foot{display:flex;gap:9px;padding:0 22px 20px}
+.btn-se-exit{flex:1;padding:10px;background:var(--white);border:1.5px solid var(--bm);
+  border-radius:9px;font-size:13.5px;font-weight:600;cursor:pointer;font-family:var(--ff);
+  color:var(--text);transition:background .12s}
+.btn-se-exit:hover{background:var(--bg)}
+.btn-se-save{flex:1;padding:10px;background:var(--g800);color:#fff;border:none;
+  border-radius:9px;font-size:13.5px;font-weight:600;cursor:pointer;font-family:var(--ff);transition:background .12s}
+.btn-se-save:hover{background:#163d24}
+
+/* ── SUCCESSOR TRUSTEE SECTION ──────────────────── */
+.add-link{display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:600;
+  color:var(--g800);background:none;border:none;cursor:pointer;font-family:var(--ff);
+  padding:4px 0;transition:opacity .12s}
+.add-link:hover{opacity:.75}
+.successor-form{background:var(--bg);border-radius:9px;padding:14px;margin-top:10px;
+  border:1px solid var(--border)}
+.successor-ttl{font-size:12.5px;font-weight:700;color:var(--ts);margin-bottom:10px;
+  text-transform:uppercase;letter-spacing:.4px}
+
+/* ── CONFETTI CANVAS ─────────────────────────────── */
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:500}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes popIn{from{transform:scale(0)}to{transform:scale(1)}}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════ SIDEBAR ═══ -->
+<nav id="sidebar">
+  <div class="sb-logo">
+    <div class="sb-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="28" height="28" rx="6" fill="#1C4D2E"/><rect x="8" y="7" width="3" height="14" rx="1.5" fill="white"/></svg></div>
+    Entrusted
+  </div>
+  <div class="sb-nav">
+    <div class="nav-item active" onclick="showDash()"><span class="ni"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="10" width="3" height="8" rx="1"/><rect x="14" y="6" width="3" height="12" rx="1"/></svg></span> Dashboard</div>
+    <div class="nav-item disabled"><span class="ni"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span> Trusts</div>
+    <div class="nav-item disabled"><span class="ni"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span> Tasks <span class="nav-badge">8</span></div>
+    <div class="nav-item disabled"><span class="ni"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></span> Reports</div>
+  </div>
+  <div class="sb-footer">
+    <div class="sb-footer-nav">
+      <div class="sb-footer-row dash-disabled"><span class="ni"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"/><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"/><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"/></svg></span> Support</div>
+      <div class="sb-footer-row dash-disabled"><span class="ni"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span> Settings</div>
+    </div>
+    <div class="sb-user">
+      <div><div class="user-name">Sarah Johnson</div><div class="user-role">Senior Partner</div></div>
+      <div class="user-chev"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 15 12 20 17 15"/><polyline points="17 9 12 4 7 9"/></svg></div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════ MAIN ═══ -->
+<div id="main">
+  <header id="topbar">
+    <div class="search-box">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <span class="search-txt">Search trusts, beneficiaries, or transactions</span>
+    </div>
+    <div class="tb-space"></div>
+    <div class="tb-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+    <div class="help-link">Help &amp; Support <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+  </header>
+
+  <div id="content">
+
+    <!-- ══════════════════ DASHBOARD ══════════════ -->
+    <div id="sc-dash" class="screen active">
+      <div class="dash-wrap">
+        <div class="dash-h1">Welcome back, Sarah</div>
+        <div class="dash-sub">Here is your trust accounting overview for March 3, 2026.</div>
+        <div class="stat-row">
+          <div class="stat-c">
+            <div class="stat-hdr">Active Trusts</div>
+            <div class="stat-body">
+              <div class="stat-num">12</div>
+              <div class="stat-note muted">All in good standing</div>
+            </div>
+            <div class="stat-foot">
+              <a class="stat-foot-lnk dash-disabled">View Trusts <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+            </div>
+          </div>
+          <div class="stat-c">
+            <div class="stat-hdr">Accountings Due</div>
+            <div class="stat-body">
+              <div class="stat-num">3</div>
+              <div class="stat-note warn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Due within 30 days</div>
+            </div>
+            <div class="stat-foot">
+              <a class="stat-foot-lnk dash-disabled">Generate Accounting <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+            </div>
+          </div>
+          <div class="stat-c">
+            <div class="stat-hdr">Pending Transactions</div>
+            <div class="stat-body">
+              <div class="stat-num">24</div>
+              <div class="stat-note amber"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Need review</div>
+            </div>
+            <div class="stat-foot">
+              <a class="stat-foot-lnk dash-disabled">Review Now <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+            </div>
+          </div>
+          <div class="stat-c">
+            <div class="stat-hdr">Unreconciled Accounts</div>
+            <div class="stat-body">
+              <div class="stat-num">5</div>
+              <div class="stat-note muted">&nbsp;</div>
+            </div>
+            <div class="stat-foot">
+              <a class="stat-foot-lnk dash-disabled">Reconcile Now <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+            </div>
+          </div>
+        </div>
+        <div class="two-col">
+          <div>
+            <div class="section-ttl">Pick Up Where You Left Off</div>
+            <div class="resume-card">
+              <div class="resume-top">
+                <div class="resume-name">Martell Family Revocable Trust</div>
+                <div class="resume-type">Trust Accounting</div>
+                <div class="resume-badge-row"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Due in 12 days</div>
+              </div>
+              <div class="resume-foot">
+                <a class="resume-lnk dash-disabled">Resume Now <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="section-ttl">Quick Actions</div>
+            <div class="qa-grid">
+              <button class="qa-btn dash-disabled">Record Transactions <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
+              <button class="qa-btn dash-disabled">Generate Accounting <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></button>
+              <button class="qa-btn dash-disabled">Reconcile Accounts <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/></svg></button>
+              <button class="qa-btn" id="add-new-trust-btn" onclick="startWizard()">Add New Trust <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+            </div>
+          </div>
+        </div>
+        <div class="urgent-outer-hdr">
+          <div class="section-ttl" style="margin:0">Urgent Tasks</div>
+          <a class="btn-sm dash-disabled">View All</a>
+        </div>
+        <div class="urgent-block">
+          <div class="t-cols"><span>Trust Name</span><span>Task</span><span>Due Date &#8597;</span><span>Status &#8597;</span><span></span></div>
+          <div class="t-row">
+            <div><div class="tn">The Arthur H. Vandelay Trust</div><div class="tid">ID: #TR-8821-CA</div></div>
+            <div><div class="task-name">Trust Accounting</div><div class="task-code">§16062</div></div>
+            <div>Jan 4, 2026</div>
+            <div><span class="badge danger"><span class="dot"></span> Overdue</span></div>
+            <div class="t-acts"><a class="dash-disabled">View Trust</a><a class="g dash-disabled">Generate Now</a></div>
+          </div>
+          <div class="t-row">
+            <div><div class="tn">Penelope Rodriguez Living Trust</div><div class="tid">ID: #TR-6498-CA</div></div>
+            <div><div class="task-name">Information Request</div><div class="task-code">§16061</div></div>
+            <div>Feb 15, 2026</div>
+            <div><span class="badge warn"><span class="dot"></span> Due Soon</span></div>
+            <div class="t-acts"><a class="dash-disabled">View Trust</a><a class="g dash-disabled">Respond Now</a></div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /dash -->
+
+    <!-- ══════════════════ WIZARD ══════════════════ -->
+    <div id="sc-wiz" class="screen wiz-screen">
+      <div class="wiz">
+        <!-- Top bar -->
+        <div class="wiz-top">
+          <div class="step-ind">
+            <span id="step-txt">Step 1 of 7</span>
+            <div class="dots" id="step-dots"></div>
+          </div>
+          <button class="save-exit" onclick="openSaveExit()">Save &amp; Exit</button>
+        </div>
+
+        <!-- Step 1: Trust Basics -->
+        <div class="wiz-step" id="step-1">
+          <div class="wiz-body">
+            <div class="wiz-ttl">
+              <h2>Add New Trust</h2>
+              <p>Let's start with the basics of the trust.</p>
+            </div>
+            <div class="wiz-card">
+              <div class="fg">
+                <label class="fl">Trust Name <span class="req">*</span></label>
+                <input class="fi" id="f-trust-name" placeholder="The George and Isabella Harrison Trust" type="text">
+                <div class="fhint">This is the full legal name as it appears in the trust document.</div>
+              </div>
+              <div class="fg">
+                <label class="fl">Trust Type <span class="req">*</span></label>
+                <select class="fs" id="f-trust-type">
+                  <option value="">Select type...</option>
+                  <option value="revocable">Revocable Living Trust</option>
+                  <option value="irrevocable">Irrevocable Trust</option>
+                  <option value="special-needs">Special Needs Trust</option>
+                  <option value="charitable">Charitable Remainder Trust</option>
+                  <option value="testamentary">Testamentary Trust</option>
+                  <option value="spendthrift">Spendthrift Trust</option>
+                  <option value="blind">Blind Trust</option>
+                </select>
+              </div>
+              <div class="fg">
+                <label class="fl">Governing Law <span class="req">*</span></label>
+                <select class="fs" id="f-gov-law">
+                  <option value="">Select state...</option>
+                  <option value="CA" selected>California</option>
+                  <option value="NY">New York</option>
+                  <option value="TX">Texas</option>
+                  <option value="FL">Florida</option>
+                  <option value="WA">Washington</option>
+                  <option value="OR">Oregon</option>
+                  <option value="NV">Nevada</option>
+                  <option value="AZ">Arizona</option>
+                  <option value="CO">Colorado</option>
+                  <option value="IL">Illinois</option>
+                  <option value="MA">Massachusetts</option>
+                  <option value="PA">Pennsylvania</option>
+                  <option value="OH">Ohio</option>
+                  <option value="GA">Georgia</option>
+                  <option value="NC">North Carolina</option>
+                  <option value="VA">Virginia</option>
+                  <option value="MN">Minnesota</option>
+                  <option value="WI">Wisconsin</option>
+                  <option value="other">Other State</option>
+                </select>
+                <div class="fhint">Which state's laws govern this trust?</div>
+              </div>
+              <div class="fg">
+                <label class="fl">Tax ID (EIN) <span class="req">*</span></label>
+                <input class="fi" id="f-ein" placeholder="12-3456789" type="text" maxlength="10"
+                  oninput="fmtEIN(this)">
+                <div class="fhint">Format: 12-3456789. Required for trust bank accounts.</div>
+              </div>
+              <div class="tip-box" id="ein-tip">
+                <span style="flex-shrink:0">💡</span>
+                <div><strong>TIP: Don't have an EIN yet?</strong><br>You can apply for one at <a href="#" onclick="return false">irs.gov/ein</a> in about 10 mins.<br><a href="#" onclick="return false" style="margin-top:4px;display:inline-block">Apply for EIN</a></div>
+              </div>
+            </div>
+          </div>
+          <div class="wiz-foot">
+            <div></div>
+            <div class="wiz-foot-r">
+              <button class="btn-skip" onclick="goStep(2)">Skip for Now</button>
+              <button class="btn-next" onclick="goStep(2)">Next: Trustee Info →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Trustee Info -->
+        <div class="wiz-step" id="step-2" style="display:none">
+          <div class="wiz-body">
+            <div class="wiz-ttl">
+              <h2>Trustee Information</h2>
+              <p>Let's start with the basics of the trust.</p>
+            </div>
+            <div class="wiz-card">
+              <div class="radio-opt sel" id="rad-self" onclick="selectTrustee('self')">
+                <div class="rdot"></div>
+                <span class="radio-lbl">I'm the trustee</span>
+              </div>
+              <div class="radio-opt" id="rad-other" onclick="selectTrustee('other')">
+                <div class="rdot"></div>
+                <span class="radio-lbl">Someone else is the trustee</span>
+              </div>
+
+              <!-- Other trustee fields (hidden by default) -->
+              <div id="other-trustee-fields" style="display:none;margin-top:4px">
+                <div class="fg">
+                  <label class="fl">Trustee Name <span class="req">*</span></label>
+                  <input class="fi" id="f-trustee-name" placeholder="First and Last Name" type="text">
+                </div>
+                <div class="fg">
+                  <label class="fl">Email</label>
+                  <input class="fi" id="f-trustee-email" placeholder="example@gmail.com" type="email">
+                </div>
+                <div class="fg">
+                  <label class="fl">Phone</label>
+                  <input class="fi" id="f-trustee-phone" placeholder="(000) 123-4567" type="tel">
+                </div>
+              </div>
+
+              <div class="fg" style="margin-top:8px">
+                <label class="fl">Trustee Compensation</label>
+                <select class="fs" id="f-comp-type" onchange="updateCompFields()">
+                  <option value="">Select...</option>
+                  <option value="hourly">Hourly</option>
+                  <option value="fixed">Fixed Annual Fee</option>
+                  <option value="pct">Percentage of Assets (AUM)</option>
+                  <option value="statutory">Statutory Fee (CA §15681)</option>
+                  <option value="none">No Compensation</option>
+                </select>
+              </div>
+              <div id="comp-rate-wrap" class="fg" style="display:none">
+                <label class="fl" id="comp-rate-lbl">Hourly Rate</label>
+                <div class="rate-row">
+                  <span class="rate-pre">$</span>
+                  <input class="fi rate-input" id="f-comp-rate" placeholder="250" type="number" min="0">
+                  <span class="rate-suf">USD</span>
+                </div>
+              </div>
+              <div id="comp-pct-wrap" class="fg" style="display:none">
+                <label class="fl">Percentage of AUM</label>
+                <div class="suf-wrap">
+                  <input class="fi" id="f-comp-pct" placeholder="1.0" type="number" step="0.1" min="0" max="10">
+                  <span class="suf-sym">%</span>
+                </div>
+              </div>
+              <div id="comp-statutory-note" style="display:none">
+                <div class="tip-box" style="margin-top:0;margin-bottom:0">
+                  <span style="flex-shrink:0">💡</span>
+                  <div><strong>TIP:</strong> CA §15681 tiered schedule: 4% on first $100K · 3% on next $100K · 2% on next $800K · 1% over $1M</div>
+                </div>
+              </div>
+
+              <div style="border-top:1px solid var(--border);padding-top:14px;margin-top:4px">
+                <button class="add-link" disabled style="opacity:.4;cursor:default;pointer-events:none">
+                  <span id="succ-plus">＋</span> Add Successor Trustee
+                </button>
+                <div id="successor-form" style="display:none">
+                  <div class="successor-form">
+                    <div class="successor-ttl">Successor Trustee</div>
+                    <div class="fgrid">
+                      <div class="fg" style="margin-bottom:0">
+                        <label class="fl">Full Name</label>
+                        <input class="fi" placeholder="Successor name" type="text">
+                      </div>
+                      <div class="fg" style="margin-bottom:0">
+                        <label class="fl">Email</label>
+                        <input class="fi" placeholder="email@example.com" type="email">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="wiz-foot">
+            <button class="btn-prev" id="step2-left-btn" onclick="goStep(1)">← Previous</button>
+            <div class="wiz-foot-r">
+              <button class="btn-skip" onclick="goStep(3)">Skip for Now</button>
+              <button class="btn-next" onclick="goStep(3)">Next: Beneficiaries →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Beneficiaries -->
+        <div class="wiz-step" id="step-3" style="display:none">
+          <div class="wiz-body">
+            <div class="wiz-ttl">
+              <h2>Beneficiaries</h2>
+              <p>Who benefits from this trust?</p>
+            </div>
+            <div class="wiz-card wide">
+              <div class="tip-box" style="margin-bottom:var(--sp-2xl);margin-top:0">
+                <span style="flex-shrink:0">💡</span>
+                <div>TIP: CA trusts typically have two types:<ul style="margin:4px 0 0 16px;padding:0;list-style:disc"><li style="margin-bottom:2px"><strong>Income beneficiaries</strong> – receive income distributions (rent, dividends) during the trust term.</li><li><strong>Remainder beneficiaries</strong> - receive principal when the trust terminates</li></ul></div>
+              </div>
+
+              <!-- Income beneficiaries -->
+              <div class="bsec" id="income-bsec">
+                <div class="bsec-hdr">
+                  <span class="bsec-ttl">Current Income Beneficiaries</span>
+                  <button class="btn-add-sm" onclick="openBeneModal('income')">+ Add Beneficiary</button>
+                </div>
+                <div id="income-empty" class="bene-empty" onclick="openBeneModal('income')">
+                  <div class="plus-sq">+</div>
+                  <div class="bene-empty-txt">Click to add an income beneficiary</div>
+                </div>
+                <table class="bene-tbl" id="income-table" style="display:none">
+                  <thead><tr><th>Beneficiary Name</th><th>Relationship</th><th>Share</th><th>Email</th><th></th></tr></thead>
+                  <tbody id="income-tbody"></tbody>
+                </table>
+              </div>
+
+              <!-- Remainder beneficiaries -->
+              <div class="bsec" id="remainder-bsec">
+                <div class="bsec-hdr">
+                  <span class="bsec-ttl">Current Remainder Beneficiaries</span>
+                  <button class="btn-add-sm" onclick="openBeneModal('remainder')">+ Add Beneficiary</button>
+                </div>
+                <div id="remainder-empty" class="bene-empty" onclick="openBeneModal('remainder')">
+                  <div class="plus-sq">+</div>
+                  <div class="bene-empty-txt">Click to add a remainder beneficiary</div>
+                </div>
+                <table class="bene-tbl" id="remainder-table" style="display:none">
+                  <thead><tr><th>Beneficiary Name</th><th>Relationship</th><th>Share</th><th>Email</th><th></th></tr></thead>
+                  <tbody id="remainder-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="wiz-foot">
+            <button class="btn-prev" onclick="goStep(2)">← Previous</button>
+            <div class="wiz-foot-r">
+              <button class="btn-skip" onclick="goStep(4)">Skip for Now</button>
+              <button class="btn-next" onclick="goStep(4)">Next: Assets →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Assets -->
+        <div class="wiz-step" id="step-4" style="display:none">
+          <div class="wiz-body">
+            <div class="wiz-ttl">
+              <h2>Assets</h2>
+              <p>What assets does this trust hold?</p>
+            </div>
+            <div class="wiz-card wide">
+              <div class="tip-box" style="margin-bottom:var(--sp-2xl);margin-top:0">
+                <span style="flex-shrink:0">💡</span>
+                <div><strong>TIP:</strong> You can skip this step and add assets later from the Assets tab. However, adding them now will populate your first accounting automatically.</div>
+              </div>
+              <div style="font-size:var(--fs-sm);font-weight:700;text-align:center;margin-bottom:2px;color:var(--ts);display:flex;align-items:center;justify-content:center;gap:var(--sp-xs)">Quick Add <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--tm)"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
+              <div class="qa-grid-assets">
+                <button class="asset-type-btn" onclick="openAssetModal('Real Estate')">Real Estate</button>
+                <button class="asset-type-btn" disabled style="opacity:.4;cursor:default;pointer-events:none">Brokerage Account</button>
+                <button class="asset-type-btn" disabled style="opacity:.4;cursor:default;pointer-events:none">Bank Account</button>
+                <button class="asset-type-btn" disabled style="opacity:.4;cursor:default;pointer-events:none">Personal Property</button>
+                <button class="asset-type-btn" disabled style="opacity:.4;cursor:default;pointer-events:none">Other</button>
+              </div>
+              <div class="asset-list" id="asset-list" style="display:none">
+                <div class="asset-list-hdr">
+                  <div class="asset-list-hdr-left">Assets (<span id="asset-count">0</span>)</div>
+                  <div class="asset-list-hdr-right">
+                    <div class="label">Total Asset Value</div>
+                    <div class="value" id="asset-total-val">$0</div>
+                  </div>
+                </div>
+                <table class="asset-tbl">
+                  <thead><tr><th>Name</th><th>Category</th><th>Cost Basis</th><th>Fair Market Value</th><th>Date Acquired</th><th></th></tr></thead>
+                  <tbody id="asset-tbody"></tbody>
+                </table>
+                <div class="asset-add-row">
+                  <button class="asset-add-link" disabled><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Another Asset</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="wiz-foot">
+            <button class="btn-prev" onclick="goStep(3)">← Previous</button>
+            <div class="wiz-foot-r">
+              <button class="btn-skip" onclick="goStep(5)">Skip for Now</button>
+              <button class="btn-next" onclick="goStep(5)">Next: Link Accounts →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5: Link Bank Accounts -->
+        <div class="wiz-step" id="step-5" style="display:none">
+          <div class="wiz-body">
+            <div class="wiz-ttl">
+              <h2>Link Bank Accounts</h2>
+              <p>Connect accounts for automatic transaction import</p>
+            </div>
+            <div class="wiz-card">
+              <div class="why-card">
+                <div class="why-hdr">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--tm)"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                  <div class="why-hdr-text"><strong>Why Connect Accounts?</strong><span>Understand what data we can access from different account types</span></div>
+                </div>
+                <div class="acct-types">
+                  <div class="acct-col">
+                    <div class="acct-col-lbl">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--tm)"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                      <div class="acct-col-lbl-text"><strong>Cash accounts</strong><span>Checking, savings accounts</span></div>
+                    </div>
+                    <div class="acct-feat">Automatic transaction import</div>
+                    <div class="acct-feat">Real-time balance updates</div>
+                    <div class="acct-feat">Faster bank reconciliation</div>
+                  </div>
+                  <div class="acct-col">
+                    <div class="acct-col-lbl">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--tm)"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                      <div class="acct-col-lbl-text"><strong>Investment accounts</strong><span>Brokerage, IRA accounts</span></div>
+                    </div>
+                    <div class="acct-feat">Balance and holdings updates only</div>
+                    <div class="acct-feat">Limited transaction detail</div>
+                    <div class="acct-feat">Manual statement upload needed for full history</div>
+                  </div>
+                </div>
+              </div>
+              <div class="tip-box" style="margin-top:0;margin-bottom:var(--sp-xl)">
+                <span style="flex-shrink:0"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--tm)"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+                <div>Your credentials are encrypted and never stored. We use Plaid, trusted by Venmo, Mint, and Robinhood.</div>
+              </div>
+
+              <!-- Empty state -->
+              <div id="plaid-empty-zone">
+                <div class="plaid-zone" onclick="openPlaid('Wells Fargo')">
+                  <div class="plaid-zone-icon">+</div>
+                  <div class="plaid-zone-txt">Connect your first account with Plaid</div>
+                </div>
+              </div>
+
+              <!-- Connected accounts (shown after Plaid) -->
+              <div id="plaid-connected" style="display:none">
+                <div class="conn-card">
+                  <div class="conn-hdr">
+                    <div>
+                      <div class="conn-ttl">Connected Accounts (<span id="acct-count">2</span>)</div>
+                    </div>
+                    <div>
+                      <div class="conn-total-lbl">Total Account Value</div>
+                      <div class="conn-total-val" id="conn-total">$749,431</div>
+                    </div>
+                  </div>
+                  <div class="conn-thead">
+                    <span>Name</span><span>Category</span><span>Balance</span><span>Last Synced</span><span></span>
+                  </div>
+                  <div id="conn-rows"></div>
+                  <button class="conn-add-btn" onclick="openPlaid('Chase')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Connect Another Account</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="wiz-foot">
+            <button class="btn-prev" onclick="goStep(4)">← Previous</button>
+            <div class="wiz-foot-r">
+              <button class="btn-skip" onclick="goStep(6)">Skip for Now</button>
+              <button class="btn-next" onclick="goStep(6)">Next: Review →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 6: Review & Confirm -->
+        <div class="wiz-step" id="step-6" style="display:none">
+          <div class="wiz-body">
+            <div class="wiz-ttl">
+              <h2>Review &amp; Confirm</h2>
+              <p>Review your trust details before creating</p>
+            </div>
+            <div class="rev-grid" style="max-width:1080px;margin:0 auto;width:100%">
+                <div class="rev-card">
+                  <div class="rev-card-hdr">
+                    <div class="rev-card-ttl">Trust Basics</div>
+                    <div class="edit-ic" onclick="goStep(1)" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg></div>
+                  </div>
+                  <div class="rev-row"><span class="rev-lbl">Name:</span><span class="rev-val" id="rv-name">—</span></div>
+                  <div class="rev-row"><span class="rev-lbl">Type:</span><span class="rev-val" id="rv-type">—</span></div>
+                  <div class="rev-row"><span class="rev-lbl">Governing Law:</span><span class="rev-val" id="rv-law">—</span></div>
+                  <div class="rev-row"><span class="rev-lbl">Tax ID:</span><span class="rev-val" id="rv-ein">—</span></div>
+                </div>
+                <div class="rev-card">
+                  <div class="rev-card-hdr">
+                    <div class="rev-card-ttl">Beneficiaries</div>
+                    <div class="edit-ic" onclick="goStep(3)" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg></div>
+                  </div>
+                  <div id="rv-bene-content">
+                    <div class="rev-row rev-full"><span style="color:var(--tm);font-size:12.5px">No beneficiaries added yet</span></div>
+                  </div>
+                </div>
+                <div class="rev-card">
+                  <div class="rev-card-hdr">
+                    <div class="rev-card-ttl">Bank Accounts</div>
+                    <div class="edit-ic" onclick="goStep(5)" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg></div>
+                  </div>
+                  <div id="rv-bank-content">
+                    <div class="rev-row rev-full"><span style="color:var(--tm);font-size:12.5px">No accounts connected</span></div>
+                  </div>
+                </div>
+                <div class="rev-card">
+                  <div class="rev-card-hdr">
+                    <div class="rev-card-ttl">Initial Assets</div>
+                    <div class="edit-ic" onclick="goStep(4)" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg></div>
+                  </div>
+                  <div id="rv-asset-content">
+                    <div class="rev-row rev-full"><span style="color:var(--tm);font-size:12.5px">No assets added</span></div>
+                  </div>
+                </div>
+                <div class="rev-card">
+                  <div class="rev-card-hdr">
+                    <div class="rev-card-ttl">Trustee</div>
+                    <div class="edit-ic" onclick="goStep(2)" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg></div>
+                  </div>
+                  <div class="rev-row"><span class="rev-lbl">Name:</span><span class="rev-val" id="rv-trustee">—</span></div>
+                  <div class="rev-row"><span class="rev-lbl">Compensation:</span><span class="rev-val" id="rv-comp">—</span></div>
+                </div>
+              </div>
+          </div>
+          <div class="wiz-foot">
+            <button class="btn-prev" onclick="goStep(5)">← Previous</button>
+            <div class="wiz-foot-r">
+              <button class="btn-skip" onclick="triggerSuccess()">Skip for Now</button>
+              <button class="btn-confirm" onclick="triggerSuccess()">Confirm →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 7: Success -->
+        <div class="wiz-step" id="step-7" style="display:none">
+          <div class="suc-wrap">
+            <div class="suc-ttl">
+              <h2>Trust Created Successfully! 🎉</h2>
+              <p>What would you like to do next?</p>
+            </div>
+            <div class="suc-cards">
+              <div class="suc-card" onclick="showDash()">
+                <div class="suc-card-ttl">Review Imported Transactions</div>
+                <div class="suc-card-body">We've imported 47 transactions from your connected Wells Fargo account. Review and categorize them to start building your accounting.</div>
+                <div class="suc-card-lnk">Review Transactions →</div>
+              </div>
+              <div class="suc-card" onclick="showDash()">
+                <div class="suc-card-ttl">Import Investment Transactions</div>
+                <div class="suc-card-body">Upload statements from Charles Schwab to import buys, sells, and dividends.</div>
+                <div class="suc-card-lnk">Add More Assets →</div>
+              </div>
+              <div class="suc-card" onclick="showDash()">
+                <div class="suc-card-ttl">Add More Assets</div>
+                <div class="suc-card-body">You added 2 assets. Add more to complete your trust inventory.</div>
+                <div class="suc-card-lnk">Add More Assets →</div>
+              </div>
+              <div class="suc-card" onclick="showDash()">
+                <div class="suc-card-ttl">View Trust Overview</div>
+                <div class="suc-card-body" id="suc-trust-name-body">See the complete summary of the trust.</div>
+                <div class="suc-card-lnk">Review Now →</div>
+              </div>
+            </div>
+            <button class="btn-return" onclick="showDash()">Return to Dashboard →</button>
+          </div>
+        </div>
+
+      </div><!-- /wiz -->
+    </div><!-- /sc-wiz -->
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<!-- ═══════════════════════════════ BENEFICIARY MODAL ═══ -->
+<div class="overlay" id="bene-modal">
+  <div class="mbox">
+    <div class="mhdr">
+      <div class="mttl" id="bene-modal-title">Add Income Beneficiary</div>
+      <button class="mclose" onclick="closeBeneModal()">✕</button>
+    </div>
+    <div class="mbody">
+      <div class="msec-ttl">Basic Information</div>
+      <div class="fgrid">
+        <div class="fg">
+          <label class="fl">Full Legal Name <span class="req">*</span></label>
+          <input class="fi" id="bm-name" placeholder="Full Name" type="text">
+        </div>
+        <div class="fg">
+          <label class="fl">Date of Birth</label>
+          <input class="fi" id="bm-dob" placeholder="MM/DD/YYYY" type="text">
+        </div>
+      </div>
+      <div class="fgrid">
+        <div class="fg">
+          <label class="fl">Relationship to Settlor</label>
+          <select class="fs" id="bm-rel">
+            <option value="child">Child</option>
+            <option value="grandchild">Grandchild</option>
+            <option value="spouse">Spouse / Partner</option>
+            <option value="sibling">Sibling</option>
+            <option value="parent">Parent</option>
+            <option value="niece-nephew">Niece / Nephew</option>
+            <option value="trust">Another Trust</option>
+            <option value="charity">Charity / Organization</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label class="fl">SSN or Tax ID <span class="req">*</span></label>
+          <input class="fi" id="bm-ssn" placeholder="123-45-6789" type="text" maxlength="11"
+            oninput="fmtSSN(this)">
+          <div class="fhint">Required for 1099 tax forms.</div>
+        </div>
+      </div>
+      <div class="fgrid">
+        <div class="fg">
+          <label class="fl">Email</label>
+          <input class="fi" id="bm-email" placeholder="example@gmail.com" type="email">
+          <div class="fhint">Used to send trust accountings and notifications.</div>
+        </div>
+        <div class="fg">
+          <label class="fl">Distribution Share</label>
+          <div class="suf-wrap">
+            <input class="fi" id="bm-share" placeholder="100" type="number" min="0" max="100">
+            <span class="suf-sym">%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="msec-ttl">Mailing Address</div>
+      <div class="fgrid">
+        <div class="fg">
+          <label class="fl">Address</label>
+          <input class="fi" id="bm-addr" placeholder="Street Address" type="text">
+        </div>
+        <div class="fg">
+          <label class="fl">Apartment, suite, etc</label>
+          <input class="fi" id="bm-addr2" placeholder="Apartment #" type="text">
+        </div>
+      </div>
+      <div class="fgrid">
+        <div class="fg">
+          <label class="fl">City</label>
+          <input class="fi" id="bm-city" placeholder="City" type="text">
+        </div>
+        <div class="fg">
+          <label class="fl">State / Province</label>
+          <select class="fs" id="bm-state">
+            <option value="">State</option>
+            <option value="CA">California</option>
+            <option value="NY">New York</option>
+            <option value="TX">Texas</option>
+            <option value="FL">Florida</option>
+            <option value="WA">Washington</option>
+            <option value="OR">Oregon</option>
+            <option value="NV">Nevada</option>
+            <option value="AZ">Arizona</option>
+            <option value="CO">Colorado</option>
+            <option value="IL">Illinois</option>
+          </select>
+        </div>
+      </div>
+      <div class="fgrid">
+        <div class="fg">
+          <label class="fl">Country</label>
+          <select class="fs" id="bm-country">
+            <option value="US">United States</option>
+            <option value="CA">Canada</option>
+            <option value="UK">United Kingdom</option>
+            <option value="AU">Australia</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label class="fl">Zip Code</label>
+          <input class="fi" id="bm-zip" placeholder="Zip Code" type="text" maxlength="10">
+        </div>
+      </div>
+    </div>
+    <div class="mfoot">
+      <button class="btn-cancel" onclick="closeBeneModal()">Cancel</button>
+      <button class="btn-save" onclick="saveBene()">Save Beneficiary</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ ASSET MODAL ═══ -->
+<div class="overlay" id="asset-modal">
+  <div class="mbox">
+    <div class="mhdr">
+      <div class="mttl" id="asset-modal-title">Add Asset</div>
+      <button class="mclose" onclick="closeAssetModal()">✕</button>
+    </div>
+    <div class="mbody" id="asset-modal-body">
+      <!-- Dynamic fields injected by JS -->
+    </div>
+    <div class="mfoot">
+      <button class="btn-cancel" onclick="closeAssetModal()">Cancel</button>
+      <button class="btn-save" onclick="saveAsset()">Save Asset</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ PLAID MODAL ═══ -->
+<div class="overlay" id="plaid-modal">
+  <div class="mbox plaid-mbox">
+    <div class="plaid-mc">
+      <div class="plaid-logo-row">🔒 plaid</div>
+      <div class="p-bank-circle" id="p-icon">🏦</div>
+      <div class="p-bank-name" id="p-name">Wells Fargo</div>
+      <div class="p-status" id="p-status">Connecting to your bank...</div>
+      <div class="p-prog" id="p-prog"><div class="p-bar" id="p-bar"></div></div>
+      <div class="p-spin" id="p-spin"></div>
+      <div class="p-check" id="p-check">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div class="p-detail" id="p-detail"></div>
+      <button class="p-continue" id="p-continue" onclick="closePlaid()">Continue to Entrusted →</button>
+      <div class="p-sec">🔐 Bank-grade 256-bit encryption · Powered by Plaid</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ SAVE & EXIT ═══ -->
+<div class="overlay" id="save-exit-modal">
+  <div class="mbox se-box">
+    <div class="mhdr">
+      <div class="mttl">Save &amp; Exit?</div>
+      <button class="mclose" onclick="closeSaveExit()">✕</button>
+    </div>
+    <div class="se-body">
+      Your progress is <strong>automatically saved</strong> every 30 seconds.
+    </div>
+    <div class="se-foot">
+      <button class="btn-se-exit" onclick="closeSaveExit()">Continue Editing</button>
+      <button class="btn-se-save" onclick="exitToDash()">Save &amp; Exit</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ CONFETTI ═══ -->
+<canvas id="confetti"></canvas>
+
+<script>
+/* ── STATE ───────────────────────────────────────── */
+let curStep = 1;
+let maxStep = 1;
+let beneType = 'income';
+let assetType = 'Real Estate';
+let assetEditIdx = -1;
+let assets = [];
+let incomeBenes = [];
+let remainderBenes = [];
+let connectedAccounts = [];
+
+/* ── NAVIGATION ──────────────────────────────────── */
+function showDash() {
+  document.getElementById('sc-dash').classList.add('active');
+  document.getElementById('sc-wiz').classList.remove('active');
+  setNavActive('Dashboard');
+}
+function startWizard() {
+  document.getElementById('sc-dash').classList.remove('active');
+  document.getElementById('sc-wiz').classList.add('active');
+  setNavActive('');
+  goStep(1, false);
+}
+function setNavActive(name) {
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  if (name === 'Dashboard') document.querySelector('.nav-item').classList.add('active');
+}
+function goStep(n, animate=true) {
+  document.getElementById('step-' + curStep).style.display = 'none';
+  curStep = n;
+  maxStep = Math.max(maxStep, n);
+  document.getElementById('step-' + n).style.display = 'flex';
+  updateDots();
+  if (n === 6) populateReview();
+  window.scrollTo(0, 0);
+  document.getElementById('content').scrollTop = 0;
+}
+
+/* ── STEP DOTS ───────────────────────────────────── */
+function updateDots() {
+  const total = 7;
+  document.getElementById('step-txt').textContent = 'Step ' + curStep + ' of ' + total;
+  const container = document.getElementById('step-dots');
+  container.innerHTML = '';
+  for (let i = 1; i <= total; i++) {
+    const d = document.createElement('div');
+    const isAllDone = curStep === total;
+    d.className = 'dot ' + (isAllDone || i < curStep ? 'done' : i === curStep ? 'cur' : 'up');
+    if (isAllDone || i < curStep) {
+      d.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+      if (!isAllDone) { d.onclick = () => goStep(i); d.title = 'Go to Step ' + i; }
+    }
+    container.appendChild(d);
+  }
+  // Success dots
+  const sd = document.getElementById('suc-dots');
+  if (sd) {
+    sd.innerHTML = '';
+    for (let i = 1; i <= total; i++) {
+      const d = document.createElement('div');
+      d.className = 'dot done';
+      d.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+      sd.appendChild(d);
+    }
+  }
+}
+
+/* ── TRUSTEE STEP ────────────────────────────────── */
+function selectTrustee(type) {
+  const self = document.getElementById('rad-self');
+  const other = document.getElementById('rad-other');
+  const otherFields = document.getElementById('other-trustee-fields');
+  const leftBtn = document.getElementById('step2-left-btn');
+  if (type === 'self') {
+    self.classList.add('sel'); other.classList.remove('sel');
+    otherFields.style.display = 'none';
+    if (leftBtn) { leftBtn.textContent = '← Previous'; leftBtn.onclick = () => goStep(1); }
+    // Reset comp to Hourly for self
+    const comp = document.getElementById('f-comp-type');
+    if (comp && comp.value === '') { comp.value = 'hourly'; updateCompFields(); }
+  } else {
+    self.classList.remove('sel'); other.classList.add('sel');
+    otherFields.style.display = 'block';
+    if (leftBtn) { leftBtn.textContent = '← Save & Exit'; leftBtn.onclick = () => openSaveExit(); }
+    // Reset comp to Select... for other
+    const comp = document.getElementById('f-comp-type');
+    if (comp) { comp.value = ''; updateCompFields(); }
+  }
+}
+function updateCompFields() {
+  const v = document.getElementById('f-comp-type').value;
+  const rateWrap = document.getElementById('comp-rate-wrap');
+  const pctWrap = document.getElementById('comp-pct-wrap');
+  const statNote = document.getElementById('comp-statutory-note');
+  const lbl = document.getElementById('comp-rate-lbl');
+  rateWrap.style.display = 'none'; pctWrap.style.display = 'none'; statNote.style.display = 'none';
+  if (v === 'hourly') { rateWrap.style.display = 'block'; lbl.textContent = 'Hourly Rate'; }
+  else if (v === 'fixed') { rateWrap.style.display = 'block'; lbl.textContent = 'Annual Fee'; }
+  else if (v === 'pct') { pctWrap.style.display = 'block'; }
+  else if (v === 'statutory') { statNote.style.display = 'block'; }
+}
+function toggleSuccessor() {
+  const f = document.getElementById('successor-form');
+  const p = document.getElementById('succ-plus');
+  if (f.style.display === 'none') { f.style.display = 'block'; p.textContent = '−'; }
+  else { f.style.display = 'none'; p.textContent = '＋'; }
+}
+
+/* ── BENEFICIARY MODAL ───────────────────────────── */
+function openBeneModal(type) {
+  beneType = type;
+  document.getElementById('bene-modal-title').textContent =
+    type === 'income' ? 'Add Income Beneficiary' : 'Add Remainder Beneficiary';
+  clearBeneForm();
+  openOverlay('bene-modal');
+}
+function closeBeneModal() { closeOverlay('bene-modal'); }
+function clearBeneForm() {
+  ['bm-name','bm-dob','bm-ssn','bm-email','bm-addr','bm-addr2','bm-city','bm-zip'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  const share = document.getElementById('bm-share');
+  if (share) share.value = '100';
+  document.getElementById('bm-rel').value = 'child';
+  document.getElementById('bm-state').value = '';
+  document.getElementById('bm-country').value = 'US';
+}
+function saveBene() {
+  const name = document.getElementById('bm-name').value.trim();
+  if (!name) { document.getElementById('bm-name').focus(); shake('bm-name'); return; }
+  const bene = {
+    name,
+    rel: document.getElementById('bm-rel').options[document.getElementById('bm-rel').selectedIndex].text,
+    share: document.getElementById('bm-share').value || '100',
+    email: document.getElementById('bm-email').value,
+  };
+  if (beneType === 'income') { incomeBenes.push(bene); renderBenes('income'); }
+  else { remainderBenes.push(bene); renderBenes('remainder'); }
+  closeBeneModal();
+}
+function renderBenes(type) {
+  const list = type === 'income' ? incomeBenes : remainderBenes;
+  const empty = document.getElementById(type + '-empty');
+  const tbl = document.getElementById(type + '-table');
+  const tbody = document.getElementById(type + '-tbody');
+  if (list.length === 0) { empty.style.display = 'block'; tbl.style.display = 'none'; return; }
+  empty.style.display = 'none'; tbl.style.display = 'table';
+  tbody.innerHTML = list.map((b, i) =>
+    `<tr>
+      <td style="font-weight:500">${b.name}</td>
+      <td>${b.rel}</td>
+      <td>${b.share}%</td>
+      <td style="color:var(--ts)">${b.email || '—'}</td>
+      <td style="text-align:right">
+        <button class="act-btn g" onclick="editBene('${type}',${i})">Edit</button>
+        <button class="act-btn" onclick="deleteBene('${type}',${i})">Delete</button>
+      </td>
+    </tr>`
+  ).join('');
+}
+function editBene(type, i) {
+  beneType = type;
+  const list = type === 'income' ? incomeBenes : remainderBenes;
+  const b = list[i];
+  document.getElementById('bene-modal-title').textContent = type === 'income' ? 'Edit Income Beneficiary' : 'Edit Remainder Beneficiary';
+  document.getElementById('bm-name').value = b.name;
+  document.getElementById('bm-email').value = b.email || '';
+  document.getElementById('bm-share').value = b.share;
+  openOverlay('bene-modal');
+  // on save, replace
+  const origSave = document.querySelector('#bene-modal .btn-save').onclick;
+  document.querySelector('#bene-modal .btn-save').onclick = () => {
+    const name = document.getElementById('bm-name').value.trim();
+    if (!name) { shake('bm-name'); return; }
+    list[i] = { ...b, name, email: document.getElementById('bm-email').value, share: document.getElementById('bm-share').value };
+    renderBenes(type);
+    closeBeneModal();
+    document.querySelector('#bene-modal .btn-save').onclick = saveBene;
+  };
+}
+function deleteBene(type, i) {
+  if (type === 'income') incomeBenes.splice(i, 1);
+  else remainderBenes.splice(i, 1);
+  renderBenes(type);
+}
+
+/* ── ASSET MODAL ──────────────────────────────────── */
+const assetFieldsOther = {
+  'Brokerage Account': [
+    {id:'a-br-inst', label:'Financial Institution', req:true, placeholder:'Charles Schwab', type:'text'},
+    {id:'a-br-acct', label:'Account Number', placeholder:'****5678', type:'text'},
+    {id:'a-br-type', label:'Account Type', type:'select', options:['Individual Brokerage','IRA (Traditional)','IRA (Roth)','SEP IRA','401(k)','Other']},
+    {id:'a-br-val', label:'Current Market Value', req:true, placeholder:'720,000', type:'number', prefix:'$'},
+  ],
+  'Bank Account': [
+    {id:'a-ba-bank', label:'Bank Name', req:true, placeholder:'Wells Fargo', type:'text'},
+    {id:'a-ba-acct', label:'Account Number', placeholder:'****1234', type:'text'},
+    {id:'a-ba-type', label:'Account Type', type:'select', options:['Checking','Savings','Money Market','Certificate of Deposit','Other']},
+    {id:'a-ba-bal', label:'Current Balance', req:true, placeholder:'28,450', type:'number', prefix:'$'},
+  ],
+  'Personal Property': [
+    {id:'a-pp-desc', label:'Description', req:true, placeholder:'1965 Ford Mustang / Art collection / Jewelry...', type:'text'},
+    {id:'a-pp-val', label:'Appraised Value', req:true, placeholder:'45,000', type:'number', prefix:'$'},
+    {id:'a-pp-date', label:'Appraisal Date', placeholder:'MM/DD/YYYY', type:'text'},
+    {id:'a-pp-notes', label:'Notes', placeholder:'Serial numbers, location, condition...', type:'text'},
+  ],
+  'Other': [
+    {id:'a-ot-name', label:'Asset Name', req:true, placeholder:'Asset name', type:'text'},
+    {id:'a-ot-desc', label:'Description', placeholder:'Brief description', type:'text'},
+    {id:'a-ot-val', label:'Estimated Value', req:true, placeholder:'0', type:'number', prefix:'$'},
+    {id:'a-ot-notes', label:'Notes', placeholder:'Additional details...', type:'text'},
+  ],
+};
+function openAssetModal(type) {
+  assetType = type; assetEditIdx = -1;
+  document.getElementById('asset-modal-title').textContent = 'Add ' + type;
+  renderAssetFields(type);
+  openOverlay('asset-modal');
+}
+function renderRealEstateFields() {
+  return `
+    <div class="msec-ttl" style="margin-top:0">Property Address</div>
+    <div class="fgrid">
+      <div class="fg"><label class="fl">Address</label><input class="fi" id="a-re-addr" placeholder="Street Address" type="text"></div>
+      <div class="fg"><label class="fl">Apartment, suite, etc</label><input class="fi" id="a-re-apt" placeholder="Apartment #" type="text"></div>
+    </div>
+    <div class="fgrid">
+      <div class="fg"><label class="fl">City</label><input class="fi" id="a-re-city" placeholder="City" type="text"></div>
+      <div class="fg"><label class="fl">State/province</label><input class="fi" id="a-re-state" placeholder="State" type="text"></div>
+    </div>
+    <div class="fgrid">
+      <div class="fg"><label class="fl">Country</label><select class="fs" id="a-re-country"><option>United States</option><option>Canada</option><option>Mexico</option><option>Other</option></select></div>
+      <div class="fg"><label class="fl">Zip Code</label><input class="fi" id="a-re-zip" placeholder="Zip Code" type="text"></div>
+    </div>
+    <div class="msec-ttl">Basic Information</div>
+    <div class="fgrid">
+      <div class="fg"><label class="fl">Property Type</label><select class="fs" id="a-re-type"><option>Single Family Residence</option><option>Condo/Townhome</option><option>Multi-Family</option><option>Rental Property</option><option>Vacation Home</option><option>Commercial</option><option>Land</option><option>Other</option></select></div>
+      <div class="fg"><label class="fl">Date Acquired</label><input class="fi" id="a-re-date" placeholder="MM/DD/YYYY" type="text"></div>
+    </div>
+    <div class="fgrid">
+      <div class="fg"><label class="fl">Original Purchase Price</label><div class="pre-wrap"><span class="pre-sym">$</span><input class="fi" id="a-re-cost" placeholder="Ex: $1,250,000" type="text"></div><div class="fhint">Used for cost basis calculation.</div></div>
+      <div class="fg"><label class="fl">Current Fair Market Value <span class="req">*</span></label><div class="pre-wrap"><span class="pre-sym">$</span><input class="fi" id="a-re-val" placeholder="Ex: $2,250,000" type="text"></div><div class="fhint">Current appraised or estimated market value.</div></div>
+    </div>
+    <div class="fgrid" style="align-items:start">
+      <div class="fg"><label class="fl">Valuation Date</label><input class="fi" id="a-re-valdate" placeholder="MM/DD/YYYY" type="text"></div>
+      <div class="fg" style="margin-bottom:0"><div class="ftoggle" id="a-re-rental-toggle" onclick="this.classList.toggle('on')"><div class="ftoggle-track"><div class="ftoggle-thumb"></div></div> This property generates rental income</div></div>
+    </div>`;
+}
+function renderAssetFields(type) {
+  if (type === 'Real Estate') {
+    document.getElementById('asset-modal-body').innerHTML = renderRealEstateFields();
+    return;
+  }
+  const fields = assetFieldsOther[type] || assetFieldsOther['Other'];
+  document.getElementById('asset-modal-body').innerHTML = fields.map(f => {
+    const lbl = `<label class="fl">${f.label}${f.req ? ' <span class="req">*</span>' : ''}</label>`;
+    let input = '';
+    if (f.type === 'select') {
+      input = `<select class="fs" id="${f.id}">${f.options.map(o => `<option>${o}</option>`).join('')}</select>`;
+    } else if (f.prefix) {
+      input = `<div class="pre-wrap"><span class="pre-sym">${f.prefix}</span><input class="fi" id="${f.id}" placeholder="${f.placeholder||''}" type="${f.type}"></div>`;
+    } else {
+      input = `<input class="fi" id="${f.id}" placeholder="${f.placeholder||''}" type="${f.type}">`;
+    }
+    return `<div class="fg">${lbl}${input}</div>`;
+  }).join('');
+}
+function closeAssetModal() { closeOverlay('asset-modal'); }
+function saveAsset() {
+  // Validate required fields
+  if (assetType === 'Real Estate') {
+    const valEl = document.getElementById('a-re-val');
+    if (valEl && !valEl.value.trim()) { valEl.focus(); shake('a-re-val'); return; }
+  } else {
+    const fields = assetFieldsOther[assetType] || assetFieldsOther['Other'];
+    const reqField = fields.find(f => f.req);
+    if (reqField) {
+      const el = document.getElementById(reqField.id);
+      if (el && !el.value.trim()) { el.focus(); shake(reqField.id); return; }
+    }
+  }
+  // Get name & value
+  let name = assetType;
+  let value = 0;
+  let costBasis = 0;
+  let dateAcquired = '';
+  if (assetType === 'Real Estate') {
+    const addr = document.getElementById('a-re-addr')?.value || '';
+    const city = document.getElementById('a-re-city')?.value || '';
+    const state = document.getElementById('a-re-state')?.value || '';
+    name = [addr, city, state].filter(Boolean).join(', ') || 'Real Estate';
+    value = parseFloat((document.getElementById('a-re-val')?.value || '0').replace(/[^0-9.]/g,'')) || 0;
+    costBasis = parseFloat((document.getElementById('a-re-cost')?.value || '0').replace(/[^0-9.]/g,'')) || 0;
+    dateAcquired = document.getElementById('a-re-date')?.value || '';
+  } else if (assetType === 'Brokerage Account') {
+    name = (document.getElementById('a-br-inst')?.value || 'Brokerage') + ' ' + (document.getElementById('a-br-acct')?.value || '');
+    value = parseFloat(document.getElementById('a-br-val')?.value || 0);
+  } else if (assetType === 'Bank Account') {
+    name = (document.getElementById('a-ba-bank')?.value || 'Bank') + ' ' + (document.getElementById('a-ba-acct')?.value || '');
+    value = parseFloat(document.getElementById('a-ba-bal')?.value || 0);
+  } else if (assetType === 'Personal Property') {
+    name = document.getElementById('a-pp-desc')?.value || 'Personal Property';
+    value = parseFloat(document.getElementById('a-pp-val')?.value || 0);
+  } else {
+    name = document.getElementById('a-ot-name')?.value || 'Other Asset';
+    value = parseFloat(document.getElementById('a-ot-val')?.value || 0);
+  }
+  const asset = { type: assetType, name: name.trim() || assetType, value, display: fmtCurrency(value), costBasis: costBasis || undefined, dateAcquired: dateAcquired || undefined };
+  if (assetEditIdx >= 0) assets[assetEditIdx] = asset;
+  else assets.push(asset);
+  renderAssets();
+  closeAssetModal();
+}
+function renderAssets() {
+  const list = document.getElementById('asset-list');
+  if (assets.length === 0) { list.style.display = 'none'; return; }
+  list.style.display = 'block';
+  const total = assets.reduce((s, a) => s + (a.value || 0), 0);
+  document.getElementById('asset-total-val').textContent = fmtCurrency(total);
+  document.getElementById('asset-count').textContent = assets.length;
+  const tbody = document.getElementById('asset-tbody');
+  tbody.innerHTML = '';
+  assets.forEach((a, i) => {
+    const tr = document.createElement('tr');
+    const costBasis = a.costBasis ? fmtCurrency(a.costBasis) : a.display;
+    const fmv = a.display;
+    const dateAcq = a.dateAcquired || '';
+    tr.innerHTML = `<td>${a.name}</td><td>${a.type}</td><td>${costBasis}</td><td>${fmv}</td><td>${dateAcq}</td>
+      <td style="text-align:right"><button class="act-btn" onclick="deleteAsset(${i})">Delete</button> <button class="act-btn g" onclick="editAsset(${i})">Edit</button></td>`;
+    tbody.appendChild(tr);
+  });
+}
+function editAsset(i) {
+  assetEditIdx = i; assetType = assets[i].type;
+  document.getElementById('asset-modal-title').textContent = 'Edit ' + assetType;
+  renderAssetFields(assetType);
+  openOverlay('asset-modal');
+}
+function deleteAsset(i) { assets.splice(i, 1); renderAssets(); }
+
+/* ── PLAID ────────────────────────────────────────── */
+const bankIcons = {'Wells Fargo':'🏦','Chase':'🏛','Charles Schwab':'📈','Bank of America':'🏦','Fidelity':'💼'};
+let plaidBank = 'Wells Fargo';
+
+function openPlaid(bank) {
+  plaidBank = bank;
+  const icon = document.getElementById('p-icon');
+  const name = document.getElementById('p-name');
+  const status = document.getElementById('p-status');
+  const prog = document.getElementById('p-prog');
+  const bar = document.getElementById('p-bar');
+  const spin = document.getElementById('p-spin');
+  const check = document.getElementById('p-check');
+  const detail = document.getElementById('p-detail');
+  const cont = document.getElementById('p-continue');
+
+  icon.textContent = bankIcons[bank] || '🏦';
+  name.textContent = bank;
+  status.textContent = 'Connecting to ' + bank + '...';
+  prog.style.display = 'block'; bar.style.width = '0%';
+  spin.style.display = 'block';
+  check.classList.remove('show');
+  detail.classList.remove('show');
+  cont.classList.remove('show');
+
+  openOverlay('plaid-modal');
+
+  setTimeout(() => { bar.style.width = '30%'; status.textContent = 'Authenticating securely...'; }, 500);
+  setTimeout(() => { bar.style.width = '65%'; status.textContent = 'Fetching account data...'; }, 1300);
+  setTimeout(() => { bar.style.width = '90%'; status.textContent = 'Importing transactions...'; }, 2100);
+  setTimeout(() => {
+    bar.style.width = '100%';
+    setTimeout(() => {
+      spin.style.display = 'none'; prog.style.display = 'none';
+      check.classList.add('show');
+      status.textContent = 'Connected successfully!';
+      if (bank === 'Wells Fargo') detail.innerHTML = '<strong>Wells Fargo Trust Checking ****1234</strong><br>✓ Connected &nbsp;·&nbsp; 47 transactions imported &nbsp;·&nbsp; Balance: $28,450';
+      else if (bank === 'Chase') detail.innerHTML = '<strong>Chase Business Checking ****5566</strong><br>✓ Connected &nbsp;·&nbsp; 23 transactions imported &nbsp;·&nbsp; Balance: $12,870';
+      else detail.innerHTML = `<strong>${bank} ****1234</strong><br>✓ Connected &nbsp;·&nbsp; Account linked`;
+      detail.classList.add('show');
+      cont.classList.add('show');
+    }, 200);
+  }, 2800);
+}
+function closePlaid() {
+  closeOverlay('plaid-modal');
+  // Add account to connected list
+  if (plaidBank === 'Wells Fargo') {
+    connectedAccounts = [
+      {name:'Wells Fargo Trust Checking ****1234', cat:'Checking Account', bal:'$28,450', synced:'$1,895,000'},
+      {name:'Charles Schwab Brokerage ****5678', cat:'Brokerage Account', bal:'$592,254', synced:'$720,981'},
+    ];
+  } else {
+    connectedAccounts.push({name:'Chase Business Checking ****5566', cat:'Checking Account', bal:'$12,870', synced:'$12,870'});
+  }
+  renderConnected();
+  document.getElementById('plaid-empty-zone').style.display = 'none';
+  document.getElementById('plaid-connected').style.display = 'block';
+  document.querySelector('#step-5 .wiz-card').classList.add('wide');
+}
+function renderConnected() {
+  document.getElementById('acct-count').textContent = connectedAccounts.length;
+  const rows = document.getElementById('conn-rows');
+  rows.innerHTML = connectedAccounts.map(a =>
+    `<div class="conn-row">
+      <span>${a.name}</span>
+      <span>${a.cat}</span>
+      <span style="font-weight:600">${a.bal}</span>
+      <span style="color:var(--ts)">${a.synced}</span>
+      <div class="conn-acts"><a>Disconnect</a><a class="g">Upload Statement</a></div>
+    </div>`
+  ).join('');
+}
+
+/* ── REVIEW ───────────────────────────────────────── */
+function populateReview() {
+  const typeMap = {revocable:'Revocable Living Trust',irrevocable:'Irrevocable Trust',
+    'special-needs':'Special Needs Trust',charitable:'Charitable Remainder Trust',
+    testamentary:'Testamentary Trust',spendthrift:'Spendthrift Trust',blind:'Blind Trust'};
+  const lawMap = {CA:'California',NY:'New York',TX:'Texas',FL:'Florida',WA:'Washington',
+    OR:'Oregon',NV:'Nevada',AZ:'Arizona',CO:'Colorado',IL:'Illinois',MA:'Massachusetts',
+    PA:'Pennsylvania',OH:'Ohio',GA:'Georgia',NC:'North Carolina',VA:'Virginia',
+    MN:'Minnesota',WI:'Wisconsin'};
+  const compMap = {hourly:'Hourly Rate',fixed:'Fixed Annual Fee',pct:'Percentage of Assets',statutory:'Statutory Fee (CA §15681)',none:'No Compensation'};
+
+  const name = document.getElementById('f-trust-name').value || 'The George & Isabella Harrison Trust';
+  const typeVal = document.getElementById('f-trust-type').value;
+  const lawVal = document.getElementById('f-gov-law').value;
+  const ein = document.getElementById('f-ein').value || '12-3456789';
+  const compType = document.getElementById('f-comp-type').value;
+  const compRate = document.getElementById('f-comp-rate').value;
+
+  document.getElementById('rv-name').textContent = name;
+  document.getElementById('rv-type').textContent = typeMap[typeVal] || 'Revocable Living Trust';
+  document.getElementById('rv-law').textContent = lawMap[lawVal] || 'California';
+  document.getElementById('rv-ein').textContent = ein;
+  document.getElementById('rv-trustee').textContent = 'Sarah Johnson (You)';
+  const compLabel = compMap[compType] || 'Hourly Rate';
+  const rate = compType === 'hourly' ? ` · $${compRate || 350}/hour` : compType === 'fixed' ? ` · $${compRate || '5,000'}/yr` : '';
+  document.getElementById('rv-comp').textContent = compLabel + rate;
+
+  // Beneficiaries
+  const beneContent = document.getElementById('rv-bene-content');
+  const allBenes = [...incomeBenes.map(b => ({...b, btype:'Income'})), ...remainderBenes.map(b => ({...b, btype:'Remainder'}))];
+  if (allBenes.length === 0) {
+    beneContent.innerHTML = '<div class="rev-row rev-full"><span style="color:var(--tm);font-size:12.5px">No beneficiaries added</span></div>';
+  } else {
+    beneContent.innerHTML = allBenes.map(b =>
+      `<div class="rev-row"><span class="rev-lbl">${b.btype}:</span><span class="rev-val">${b.name} – ${b.share}%</span></div>`
+    ).join('');
+  }
+
+  // Bank accounts
+  const bankContent = document.getElementById('rv-bank-content');
+  if (connectedAccounts.length === 0) {
+    bankContent.innerHTML = '<div class="rev-row rev-full"><span style="color:var(--tm);font-size:12.5px">No accounts connected</span></div>';
+  } else {
+    bankContent.innerHTML = connectedAccounts.map(a =>
+      `<div class="rev-row"><span class="rev-lbl">Account:</span><span class="rev-val">${a.name}</span></div>`
+    ).join('');
+  }
+
+  // Assets
+  const assetContent = document.getElementById('rv-asset-content');
+  if (assets.length === 0) {
+    assetContent.innerHTML = '<div class="rev-row rev-full"><span style="color:var(--tm);font-size:12.5px">No assets added</span></div>';
+  } else {
+    const total = assets.reduce((s, a) => s + (a.value || 0), 0);
+    assetContent.innerHTML = `<div class="rev-row rev-full"><span class="rev-val" style="font-weight:600">${assets.length} Assets &bull; Total Account Value:\u2002${fmtCurrency(total)}</span></div>` +
+      assets.map(a => {
+        const shortName = a.type === 'Real Estate' ? a.name : (a.type === 'Brokerage Account' ? a.name.replace(/ \*\*\*\*\d+/,'') : a.name);
+        return `<div class="rev-row rev-full"><span class="rev-val">${shortName} – ${a.display}</span></div>`;
+      }).join('');
+  }
+}
+
+/* ── SUCCESS & CONFETTI ──────────────────────────── */
+function triggerSuccess() {
+  // Update success card with trust name
+  const name = document.getElementById('f-trust-name').value || 'the trust';
+  document.getElementById('suc-trust-name-body').textContent = 'See the complete summary of ' + name + '.';
+
+  // Flash & switch
+  goStep(7);
+  updateDots();
+
+  // Confetti!
+  requestAnimationFrame(() => {
+    const canvas = document.getElementById('confetti');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const ctx = canvas.getContext('2d');
+    const palette = ['#1c4d2e','#2d7a4a','#4caf72','#8dd4a8','#c4a53c','#e8d48a','#f5ecc5','#ffffff','#3a9e5f'];
+    const particles = [];
+    const sidebarW = document.getElementById('sidebar').offsetWidth;
+    const cx = sidebarW + (window.innerWidth - sidebarW) * 0.5;
+    const cy = window.innerHeight * 0.15;
+    for (let i = 0; i < 130; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 4 + Math.random() * 8;
+      particles.push({
+        x: cx + (Math.random() - .5) * 100, y: cy + (Math.random() - .5) * 40,
+        vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed - (2 + Math.random() * 3),
+        size: 4 + Math.random() * 8, color: palette[Math.floor(Math.random() * palette.length)],
+        alpha: 1, decay: .013 + Math.random() * .017, gravity: .09 + Math.random() * .06,
+        rotation: Math.random() * Math.PI * 2, rotSpeed: (Math.random() - .5) * .14,
+        shape: Math.random() < .5 ? 'rect' : Math.random() < .6 ? 'circle' : 'diamond',
+      });
+    }
+    let frame = 0;
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      let alive = false;
+      for (const p of particles) {
+        if (p.alpha <= .01) continue; alive = true;
+        p.x += p.vx; p.y += p.vy; p.vy += p.gravity;
+        p.alpha -= p.decay; p.rotation += p.rotSpeed;
+        ctx.save(); ctx.globalAlpha = Math.max(0, p.alpha);
+        ctx.fillStyle = p.color;
+        ctx.translate(p.x, p.y); ctx.rotate(p.rotation);
+        if (p.shape === 'rect') ctx.fillRect(-p.size/2, -p.size/3.5, p.size, p.size/2.5);
+        else if (p.shape === 'diamond') {
+          ctx.beginPath(); ctx.moveTo(0, -p.size/2); ctx.lineTo(p.size/3, 0);
+          ctx.lineTo(0, p.size/2); ctx.lineTo(-p.size/3, 0); ctx.closePath(); ctx.fill();
+        } else { ctx.beginPath(); ctx.arc(0, 0, p.size/2.5, 0, Math.PI*2); ctx.fill(); }
+        ctx.restore();
+      }
+      frame++;
+      if (alive && frame < 240) requestAnimationFrame(draw);
+      else ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    setTimeout(draw, 100);
+  });
+}
+
+/* ── SAVE & EXIT ──────────────────────────────────── */
+function openSaveExit() { openOverlay('save-exit-modal'); }
+function closeSaveExit() { closeOverlay('save-exit-modal'); }
+function exitToDash() { closeSaveExit(); showDash(); }
+
+/* ── OVERLAY HELPERS ──────────────────────────────── */
+function openOverlay(id) {
+  const el = document.getElementById(id);
+  el.classList.add('open');
+  document.addEventListener('keydown', escListener);
+}
+function closeOverlay(id) {
+  document.getElementById(id).classList.remove('open');
+}
+function escListener(e) {
+  if (e.key === 'Escape') {
+    ['bene-modal','asset-modal','plaid-modal','save-exit-modal'].forEach(id => closeOverlay(id));
+    document.removeEventListener('keydown', escListener);
+  }
+}
+// Click outside to close
+document.querySelectorAll('.overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay && overlay.id !== 'plaid-modal') overlay.classList.remove('open');
+  });
+});
+
+/* ── FORMAT HELPERS ──────────────────────────────── */
+function fmtEIN(el) {
+  let v = el.value.replace(/\D/g, '');
+  if (v.length > 2) v = v.slice(0,2) + '-' + v.slice(2,9);
+  el.value = v;
+}
+function fmtSSN(el) {
+  let v = el.value.replace(/\D/g, '');
+  if (v.length > 3) v = v.slice(0,3) + '-' + v.slice(3);
+  if (v.length > 6) v = v.slice(0,6) + '-' + v.slice(6,10);
+  el.value = v;
+}
+function fmtCurrency(n) {
+  if (!n && n !== 0) return '$0';
+  return '$' + Math.round(n).toLocaleString('en-US');
+}
+function shake(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.style.animation = 'none';
+  el.style.borderColor = 'var(--red)';
+  el.style.boxShadow = '0 0 0 3px rgba(220,38,38,.15)';
+  setTimeout(() => {
+    el.style.borderColor = '';
+    el.style.boxShadow = '';
+  }, 1800);
+}
+
+/* ── PRESET DATA ─────────────────────────────────── */
+function loadPresets() {
+  // Step 1: Trust basics
+  document.getElementById('f-trust-name').value = 'The George & Isabella Harrison Trust';
+  document.getElementById('f-trust-type').value = 'revocable';
+  document.getElementById('f-gov-law').value = 'CA';
+  document.getElementById('f-ein').value = '94-3821567';
+
+  // Step 2: Trustee - default to "I'm the trustee" with hourly compensation
+  selectTrustee('self');
+  document.getElementById('f-comp-type').value = 'hourly';
+  document.getElementById('f-comp-rate').value = '350';
+  updateCompFields();
+
+  // Step 3: Beneficiaries
+  incomeBenes = [
+    {name:'Isabella Harrison', rel:'Spouse / Partner', share:'60', email:'isabella@harrison.com'},
+    {name:'James Harrison', rel:'Child', share:'40', email:'james@harrison.com'},
+  ];
+  remainderBenes = [
+    {name:'Harrison Family Foundation', rel:'Charity / Organization', share:'100', email:'admin@harrisonfdn.org'},
+  ];
+  renderBenes('income');
+  renderBenes('remainder');
+
+  // Step 4: Assets
+  assets = [
+    {type:'Real Estate', name:'456 Ocean Blvd, San Diego, CA', value:1895000, display:'$1,895,000', costBasis:1080000, dateAcquired:'12/1/2022'},
+    {type:'Brokerage Account', name:'Charles Schwab Brokerage ****5678', value:720981, display:'$720,981', costBasis:592254, dateAcquired:'10/2/2019'},
+  ];
+  renderAssets();
+
+  // Step 5: Bank accounts - start empty for demo, user can connect via Plaid
+}
+
+/* ── INIT ────────────────────────────────────────── */
+(function init() {
+  updateDots();
+  document.getElementById('f-gov-law').value = 'CA';
+  document.getElementById('comp-rate-wrap').style.display = 'block';
+  // Auto-load preset data for demo
+  loadPresets();
+
+  // ── ONBOARDING TOOLTIP ──────────────────────────
+  function showOnboardTooltip() {
+    const btn = document.getElementById('add-new-trust-btn');
+    if (!btn || document.getElementById('onboard-tip')) return;
+    const tip = document.createElement('div');
+    tip.id = 'onboard-tip';
+    tip.className = 'onboard-tooltip';
+    tip.innerHTML = `
+      <div class="onboard-ttl"><span class="onboard-dot"></span>Start here</div>
+      <div class="onboard-body">Click <strong>Add New Trust</strong> to walk through the guided trust creation flow.</div>
+      <button class="onboard-dismiss" onclick="dismissOnboard()">Got it</button>`;
+    document.body.appendChild(tip);
+    positionTooltip();
+    window.addEventListener('resize', positionTooltip);
+  }
+  function positionTooltip() {
+    const btn = document.getElementById('add-new-trust-btn');
+    const tip = document.getElementById('onboard-tip');
+    if (!btn || !tip) return;
+    const r = btn.getBoundingClientRect();
+    tip.style.left = (r.left + r.width / 2 - tip.offsetWidth / 2) + 'px';
+    tip.style.top = (r.bottom + 12) + 'px';
+  }
+  window.dismissOnboard = function() {
+    const tip = document.getElementById('onboard-tip');
+    if (tip) { tip.style.opacity = '0'; tip.style.transition = 'opacity .2s'; setTimeout(() => tip.remove(), 200); }
+    window.removeEventListener('resize', positionTooltip);
+  };
+  // Show tooltip after short delay
+  setTimeout(showOnboardTooltip, 600);
+  // Also dismiss when starting wizard
+  const origStartWizard = startWizard;
+  startWizard = function() { dismissOnboard(); origStartWizard(); };
+})();
+</script>
+</body>
+</html>

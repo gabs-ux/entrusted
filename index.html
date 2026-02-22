@@ -446,9 +446,13 @@ body{font-family:var(--ff);
 .dash-disabled{pointer-events:none!important;cursor:default!important}
 
 /* ── ONBOARDING TOOLTIP ─────────────────────────── */
-.onboard-tooltip{z-index:900;background:var(--white);border:1px solid var(--border);
+.onboard-tooltip{position:absolute;z-index:900;background:var(--white);border:1px solid var(--border);
   border-radius:var(--r-xl);padding:var(--sp-xl) var(--sp-2xl);box-shadow:0 12px 40px rgba(10,13,18,.12),0 2px 8px rgba(10,13,18,.06);
-  max-width:280px;animation:onboardFadeIn .5s ease .3s both;margin-top:var(--sp-xl);margin-left:auto}
+  max-width:280px;animation:onboardFadeIn .5s ease .3s both;right:0;top:100%;margin-top:var(--sp-md)}
+.onboard-tooltip::before{content:'';position:absolute;bottom:100%;right:60px;
+  border:8px solid transparent;border-bottom-color:var(--white)}
+.onboard-tooltip::after{content:'';position:absolute;bottom:calc(100% + 1px);right:60px;
+  border:8px solid transparent;border-bottom-color:var(--border)}
 .onboard-dot{width:8px;height:8px;background:var(--g800);border-radius:50%;display:inline-block;
   animation:onboardPulse 2s ease-in-out infinite;margin-right:var(--sp-sm);vertical-align:middle}
 .onboard-ttl{font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:600;color:var(--text);margin-bottom:4px}
@@ -610,7 +614,8 @@ body{font-family:var(--ff);
   .conn-thead,.conn-row{min-width:600px}
   .conn-card{overflow-x:auto}
   /* Onboarding tooltip */
-  .onboard-tooltip{max-width:100%}
+  .onboard-tooltip{position:relative;right:auto;top:auto;max-width:100%;margin-top:var(--sp-md);grid-column:1/-1}
+  .onboard-tooltip::before,.onboard-tooltip::after{display:none}
 }
 
 /* ── Phone (≤480px) ────────────────────────────── */
@@ -2052,13 +2057,10 @@ function loadPresets() {
       <div class="onboard-ttl"><span class="onboard-dot"></span>Start here</div>
       <div class="onboard-body">Click <strong>Add New Trust</strong> to walk through the guided trust creation flow.</div>
       <button class="onboard-dismiss" onclick="dismissOnboard()">Got it</button>`;
-    // Insert after the grid so it flows below the button
-    grid.parentNode.insertBefore(tip, grid.nextSibling);
-    positionTooltip();
-    window.addEventListener('resize', positionTooltip);
+    // Append inside the grid so absolute positioning anchors to it
+    grid.appendChild(tip);
   }
   function positionTooltip() {
-    // No-op — tooltip is now in document flow below the QA grid
   }
   window.dismissOnboard = function() {
     const tip = document.getElementById('onboard-tip');

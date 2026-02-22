@@ -548,6 +548,95 @@ body{font-family:var(--ff);
 
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes popIn{from{transform:scale(0)}to{transform:scale(1)}}
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════ */
+
+/* ── Tablet (≤1024px) ──────────────────────────── */
+@media(max-width:1024px){
+  #sidebar{width:240px}
+  .dash-wrap{padding:var(--sp-3xl)}
+  .stat-row{grid-template-columns:repeat(2,1fr)}
+  .two-col{grid-template-columns:1fr}
+  .wiz-body{padding:var(--sp-3xl) var(--sp-3xl) var(--sp-xl)}
+  .wiz-card.wide{max-width:100%}
+  .rev-grid{grid-template-columns:1fr 1fr}
+  .conn-thead,.conn-row{grid-template-columns:2fr 1.2fr 1fr 1fr 1fr}
+}
+
+/* ── Small tablet / large phone (≤768px) ───────── */
+@media(max-width:768px){
+  /* Hide sidebar */
+  #sidebar{display:none}
+  /* Topbar */
+  #topbar{padding:0 var(--sp-xl);height:56px;gap:var(--sp-md)}
+  .search-box{width:auto;flex:1;min-width:0}
+  .help-link span{display:none}
+  .tb-space{display:none}
+  /* Dashboard */
+  .dash-wrap{padding:var(--sp-2xl) var(--sp-xl)}
+  .dash-h1{font-size:var(--fs-xl)}
+  .stat-row{grid-template-columns:1fr 1fr;gap:var(--sp-md)}
+  .two-col{grid-template-columns:1fr;gap:var(--sp-2xl)}
+  .qa-grid{grid-template-columns:1fr 1fr;gap:var(--sp-md)}
+  .urgent-block{overflow-x:auto}
+  .t-cols,.t-row{min-width:700px}
+  /* Wizard top bar */
+  .wiz-top{flex-direction:column;align-items:center;gap:var(--sp-md);padding:var(--sp-xl) var(--sp-xl) 0}
+  .step-ind{margin:0}
+  .save-exit{position:static;transform:none;margin-top:0}
+  /* Wizard body */
+  .wiz-body{padding:var(--sp-2xl) var(--sp-xl) var(--sp-xl)}
+  .wiz-ttl h2{font-size:var(--fs-xl)}
+  .wiz-card{padding:var(--sp-2xl);max-width:100%}
+  .wiz-card.wide{max-width:100%}
+  .fgrid{grid-template-columns:1fr}
+  /* Wizard footer */
+  .wiz-foot{padding:var(--sp-xl) var(--sp-xl) var(--sp-2xl);flex-wrap:wrap;gap:var(--sp-md)}
+  .wiz-foot-r{gap:var(--sp-md)}
+  /* Review grid */
+  .rev-grid{grid-template-columns:1fr!important;max-width:100%!important}
+  /* Modals */
+  .mbox{max-width:calc(100vw - 32px);margin:var(--sp-xl)}
+  .mbody{padding:var(--sp-xl)}
+  .mhdr{padding:var(--sp-xl)}
+  .mfoot{padding:var(--sp-xl)}
+  /* Success */
+  .suc-cards{grid-template-columns:1fr;max-width:100%}
+  .suc-wrap{padding:var(--sp-2xl) var(--sp-xl) 40px}
+  /* Account types */
+  .acct-types{grid-template-columns:1fr}
+  /* Assets */
+  .qa-grid-assets{grid-template-columns:repeat(3,1fr)}
+  .asset-tbl{display:block;overflow-x:auto}
+  /* Connected accounts */
+  .conn-thead,.conn-row{min-width:600px}
+  .conn-card{overflow-x:auto}
+  /* Onboarding tooltip */
+  .onboard-tooltip{position:fixed;bottom:var(--sp-xl);left:var(--sp-xl);right:var(--sp-xl);top:auto;max-width:none}
+  .onboard-tooltip::before,.onboard-tooltip::after{display:none}
+}
+
+/* ── Phone (≤480px) ────────────────────────────── */
+@media(max-width:480px){
+  #topbar{gap:var(--sp-sm)}
+  .search-box{font-size:var(--fs-sm);padding:var(--sp-sm) var(--sp-md)}
+  .help-link{padding:var(--sp-sm)}
+  .stat-row{grid-template-columns:1fr}
+  .qa-grid{grid-template-columns:1fr}
+  .qa-grid-assets{grid-template-columns:repeat(2,1fr)}
+  .dots{gap:4px}
+  .dot{width:20px;height:20px}
+  .dot.cur{width:24px;height:24px}
+  .dot.done svg{width:12px;height:12px}
+  .step-ind{gap:var(--sp-md);font-size:var(--fs-xs)}
+  .wiz-foot{flex-direction:column;align-items:stretch}
+  .btn-prev{justify-content:center}
+  .wiz-foot-r{justify-content:stretch}
+  .wiz-foot-r .btn-skip,.wiz-foot-r .btn-next,.wiz-foot-r .btn-confirm{flex:1;justify-content:center}
+  .bene-tbl{display:block;overflow-x:auto}
+}
 </style>
 </head>
 <body>
@@ -1973,6 +2062,7 @@ function loadPresets() {
     const btn = document.getElementById('add-new-trust-btn');
     const tip = document.getElementById('onboard-tip');
     if (!btn || !tip) return;
+    if (window.innerWidth <= 768) { tip.style.left=''; tip.style.top=''; return; }
     const r = btn.getBoundingClientRect();
     tip.style.left = (r.left + r.width / 2 - tip.offsetWidth / 2) + 'px';
     tip.style.top = (r.bottom + 12) + 'px';

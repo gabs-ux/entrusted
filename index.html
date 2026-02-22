@@ -446,13 +446,9 @@ body{font-family:var(--ff);
 .dash-disabled{pointer-events:none!important;cursor:default!important}
 
 /* ── ONBOARDING TOOLTIP ─────────────────────────── */
-.onboard-tooltip{position:absolute;z-index:900;background:var(--white);border:1px solid var(--border);
+.onboard-tooltip{z-index:900;background:var(--white);border:1px solid var(--border);
   border-radius:var(--r-xl);padding:var(--sp-xl) var(--sp-2xl);box-shadow:0 12px 40px rgba(10,13,18,.12),0 2px 8px rgba(10,13,18,.06);
-  max-width:280px;animation:onboardFadeIn .5s ease .3s both}
-.onboard-tooltip::before{content:'';position:absolute;bottom:100%;left:50%;transform:translateX(-50%);
-  border:8px solid transparent;border-bottom-color:var(--white)}
-.onboard-tooltip::after{content:'';position:absolute;bottom:calc(100% + 1px);left:50%;transform:translateX(-50%);
-  border:8px solid transparent;border-bottom-color:var(--border)}
+  max-width:280px;animation:onboardFadeIn .5s ease .3s both;margin-top:var(--sp-xl);margin-left:auto}
 .onboard-dot{width:8px;height:8px;background:var(--g800);border-radius:50%;display:inline-block;
   animation:onboardPulse 2s ease-in-out infinite;margin-right:var(--sp-sm);vertical-align:middle}
 .onboard-ttl{font-size:var(--fs-sm);line-height:var(--lh-sm);font-weight:600;color:var(--text);margin-bottom:4px}
@@ -614,8 +610,7 @@ body{font-family:var(--ff);
   .conn-thead,.conn-row{min-width:600px}
   .conn-card{overflow-x:auto}
   /* Onboarding tooltip */
-  .onboard-tooltip{position:fixed;bottom:var(--sp-xl);left:var(--sp-xl);right:var(--sp-xl);top:auto;max-width:none}
-  .onboard-tooltip::before,.onboard-tooltip::after{display:none}
+  .onboard-tooltip{max-width:100%}
 }
 
 /* ── Phone (≤480px) ────────────────────────────── */
@@ -2047,6 +2042,9 @@ function loadPresets() {
   function showOnboardTooltip() {
     const btn = document.getElementById('add-new-trust-btn');
     if (!btn || document.getElementById('onboard-tip')) return;
+    // Make parent grid relative so tooltip anchors to it
+    const grid = btn.closest('.qa-grid');
+    if (grid) grid.style.position = 'relative';
     const tip = document.createElement('div');
     tip.id = 'onboard-tip';
     tip.className = 'onboard-tooltip';
@@ -2054,18 +2052,13 @@ function loadPresets() {
       <div class="onboard-ttl"><span class="onboard-dot"></span>Start here</div>
       <div class="onboard-body">Click <strong>Add New Trust</strong> to walk through the guided trust creation flow.</div>
       <button class="onboard-dismiss" onclick="dismissOnboard()">Got it</button>`;
-    document.body.appendChild(tip);
+    // Insert after the grid so it flows below the button
+    grid.parentNode.insertBefore(tip, grid.nextSibling);
     positionTooltip();
     window.addEventListener('resize', positionTooltip);
   }
   function positionTooltip() {
-    const btn = document.getElementById('add-new-trust-btn');
-    const tip = document.getElementById('onboard-tip');
-    if (!btn || !tip) return;
-    if (window.innerWidth <= 768) { tip.style.left=''; tip.style.top=''; return; }
-    const r = btn.getBoundingClientRect();
-    tip.style.left = (r.left + r.width / 2 - tip.offsetWidth / 2) + 'px';
-    tip.style.top = (r.bottom + 12) + 'px';
+    // No-op — tooltip is now in document flow below the QA grid
   }
   window.dismissOnboard = function() {
     const tip = document.getElementById('onboard-tip');
